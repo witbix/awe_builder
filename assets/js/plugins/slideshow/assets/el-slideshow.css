@@ -1,0 +1,131 @@
+/**
+ * File: el-slideshow.css
+ * Website: http://megadrupal.com/
+ * Created: 2016
+ */
+
+.ac-slideshow .owl-dots .owl-dot .dot-number{
+	line-height: 12px;
+	font-size: 12px;
+	padding: 7px 10px;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	height: auto;
+	width: auto;
+	color: #FFF;
+}
+.dotsCont{
+	overflow: hidden;
+	clear: both;
+	margin: 0 auto;
+}
+.ac-slideshow.owl-carousel{
+	display: block !important;
+}
+.dotsCont img{
+	max-width: 150px;
+	height: auto;
+}
+.dotsCont .owl-item{
+	display: inline-block;
+	opacity: 0.5;
+}
+.dotsCont .owl-item:hover{
+	cursor: pointer;
+}
+.dotsCont .owl-item.current{
+	opacity: 1;
+}
+.dotsCont .owl-nav.disabled{
+	display: none;
+}
+.white-popup-block {
+    background: #FFF;
+    padding: 20px 30px;
+    text-align: left;
+    max-width: 650px;
+    margin: 40px auto;
+    position: relative;
+}
+.item.display-img{
+	display: block;
+}
+.ac-slideshow.owl-carousel > .item{
+	display: none;
+}
+.ac-slideshow.owl-carousel > .item.default-item{
+	display: block;
+}
+.ac-slideshow.owl-carousel .display-img{
+	display: block;
+}
+.thumb-nav .owl-dots{
+	display: none;
+}
+
+/* DEMO BACKGROUNG CSS */
+.effect-back {
+  background-color: rgba(56, 145, 207, 0.9);
+}
+
+.ac-image {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.ac-image a {
+  display: inline-block;
+}
+
+.ac-image .ac-image__caption {
+  margin-bottom: 10px;
+}
+
+.ac-image > * ~ .ac-image__caption {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.ac-image--hover,
+.ac-image--hover-top,
+.ac-image--hover-bottom {
+  position: relative;
+}
+
+.ac-image--hover .ac-image__caption,
+.ac-image--hover-top .ac-image__caption,
+.ac-image--hover-bottom .ac-image__caption {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  padding: 12px 15px;
+  left: 0;
+  max-height: 100%;
+  width: 100%;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  margin: 0;
+  transition: all .4s ease;
+}
+
+.ac-image--hover:hover .ac-image__caption,
+.ac-image--hover-top:hover .ac-image__caption,
+.ac-image--hover-bottom:hover .ac-image__caption {
+  opacity: 1;
+  visibility: visible;
+}
+
+.ac-image--hover .ac-image__caption {
+  top: 0;
+  height: 100%;
+}
+
+.ac-image--hover-top .ac-image__caption {
+  top: 0;
+}
+
+.ac-image--hover-bottom .ac-image__caption {
+  bottom: 0;
+}

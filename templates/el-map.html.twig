@@ -1,0 +1,3 @@
+{% set classes = ['awe-map', 'map_canvas', 'js-front-map'] %}
+
+<div id="ac_element__map-{{ cid }}" {{ attributes.addClass(classes) }}  data-map ='{{ map_options|raw }}'></div>

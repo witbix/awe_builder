@@ -1,0 +1,77 @@
+<?php
+/**
+ * Implement hook_schema()
+ */
+function awe_builder_schema() {
+  return array(
+    'awe_template' => array(
+      'description' => 'This table contains data of nodes what created by AWEContent Builder',
+      'fields' => array(
+        'tid' => array(
+          'type' => 'serial',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'size' => 'big'
+        ),
+        'uid' => array(
+          'type' => 'int',
+          'unsigned' => TRUE,
+          'not null' => TRUE,
+          'size' => 'big'
+        ),
+        'title' => array(
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => FALSE
+        ),
+        'type' => array(
+          'type' => 'varchar',
+          'length' => 30,
+          'not null' => TRUE
+        ),
+        'category' => array(
+          'type' => 'varchar',
+          'length' => 255,
+          'not null' => FALSE
+        ),
+        'cover' => array(
+          'type' => 'blob',
+          'size' => 'normal',
+          'not null' => FALSE
+        ),
+        'data' => array(
+          'type' => 'blob',
+          'size' => 'big',
+          'not null' => FALSE
+        ),
+        'favorite' => array(
+          'type' => 'int',
+          'size' => 'tiny',
+          'not null' => FALSE,
+          'unsigned' => TRUE,
+          'default' => 0
+        ),
+        'created' => array(
+          'description' => 'The Unix timestamp when the page was created.',
+          'type' => 'int',
+          'not null' => TRUE,
+          'default' => 0,
+        )
+      ),
+      'primary key' => array('tid'),
+      'indexes' => array(
+        'ac_temp_id' => array('tid')
+      )
+    )
+  );
+}
+
+/**
+ * Implement hook_install()
+ */
+function awe_builder_install() {
+  global $base_url;
+  $config = \Drupal::service('config.factory')->getEditable('awe_builder.settings');
+  $config->set('old_host', $base_url);
+  $config->save();
+}

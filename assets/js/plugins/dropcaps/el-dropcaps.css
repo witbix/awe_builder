@@ -1,0 +1,33 @@
+
+/* Dropcaps */
+.dropcap-style{
+  overflow: hidden;
+}
+.dropcap-style .dropcaps-square{
+  border-radius:0;
+    -moz-border-radius: 0;
+    -webkit-border-radius: 0;
+}
+.dropcap-style .dropcaps-rounded{
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+.dropcap-style .first-letter {
+    border: 1px solid rgba(0,0,0,.1);
+    color: #303030;
+    font-size: 38px;
+    float: left;
+    min-width: 66px;
+    min-height: 66px;
+    line-height: 66px;
+    font-weight: 700;
+    margin-right: 10px;
+    text-align: center;
+}
+.dropcap-style .dropcaps-normal{
+  min-width: 0;
+  min-height: 0;
+  border: none;
+  line-height: 0.8;
+}

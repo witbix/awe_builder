@@ -1,0 +1,40 @@
+{% set classes = ['ac-table'] %}
+
+<div {{ attributes.addClass(classes) }}>
+    <table class="table table-bordered" >
+        {% if main["table_header"] %}
+            <thead>
+                <tr>
+                    {% for key, valueH in main["content"][0] %}
+                        <th class="content-text  {{ (key%2 == 0)? 'odd':'even' }}">{{ valueH|raw }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+        {% endif %}
+        <tbody>
+            {% if main["table_header"] == true %} {% set first_row = 1 %} {% else %} {% set first_row = 0 %} {% endif %}
+            {% set last_row = first_row + main["rows"] - 1 %}
+            {% set rows = 0 %}
+            {% for i in range(first_row, last_row) %}
+                {% if i < main["content"]|length %}
+                    <tr  class="{{ (rows%2 == 0)? 'odd':'even' }}">
+                        {% for key, valueC in main["content"][i] %}
+                            <td class="content-text {{ (key%2 == 0)? 'odd':'even' }}">{{ valueC|raw }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% set rows = rows + 1 %}
+                {% endif %}
+            {% endfor %}
+        </tbody>
+        {% if main["table_footer"] %}
+            <tfoot>
+                <tr>
+                {% set footer_index = main["content"]|length - 1 %}
+                    {% for key, valueF in main["content"][footer_index] %}
+                        <td class="content-text  {{ (key%2 == 0)? 'odd':'even' }}">{{ valueF|raw }}</td>
+                    {% endfor %}
+                </tr>
+            </tfoot>
+        {% endif %}
+    </table>
+</div>

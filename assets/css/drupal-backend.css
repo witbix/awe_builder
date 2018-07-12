@@ -1,0 +1,6 @@
+.ac_panel__image label{
+    display: block;
+}
+.awecontent-wrapper label {display: block;}
+.awecontent-wrapper a {display: block;}
+.awecontent-wrapper a.link {border-bottom: none}

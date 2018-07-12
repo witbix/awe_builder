@@ -1,0 +1,189 @@
+/* Progress */
+.ac-progress-line .progressbar-back-text,
+.ac-progress-line .progressbar-front-text {
+    display: none;
+}
+
+
+.ac-progress-line {
+    position: relative;
+    width: 100%;
+}
+.ac-progress-line .progress-name {
+    margin-bottom: 0;
+    margin-top: 0;
+    line-height: 2.2;
+}
+.ac-progress-line .progress-value {
+    -webkit-transition: all 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
+    background-color: #337ab7;
+    width: 0;
+}
+
+/* Style 1 */
+.progress-fill-text {
+    height: 40px;
+    background-color: #eeeeee;
+}
+.progress-fill-text .progress-name {
+    position: absolute;
+    line-height: 40px;
+    padding-left: 15px;
+    top: 0;
+    left: 0;
+}
+.progress-fill-text .progress-value {
+    position: absolute;
+    height: 100%;
+    overflow: hidden;
+    z-index: 1;
+}
+.progress-fill-text .progress-value:before {
+    height: 100%;
+}
+.progress-fill-text .progress-value .progress-name {
+    color: #ffffff;
+}
+.progress-fill-text .progressbar-back-text{
+    position: absolute;
+    display: block;
+    right: 0;
+    font-size: 14px;
+    line-height: 40px;
+    padding-right: 15px;
+    text-align: right;
+}
+.progress-fill-text .progressbar-front-text {
+    display: none;
+}
+.ac-progress-line .progress-value i{
+    font-size: 20px;
+    margin-left: 5px;
+    line-height: 40px;
+}
+.progress-fill-text i.ac-icon + .progress-name{
+    left: 35px;
+    padding-left: 0;
+}
+
+
+
+/* Style 2 */
+.progress-style-classic,
+.progress-style-tooltip {
+    position: relative;
+}
+.progress-style-classic .progress-value:before {
+    content: '';
+    bottom: 0;
+    position: absolute;
+    display: block;
+    width: 100%;
+    background-color: #eeeeee;
+    z-index: -1;
+}
+.progress-style-tooltip .progressbar-back-text {
+    background-color: #eeeeee;
+}
+
+/* style 2 height bar */
+.progress-style-classic .progress-value,
+.progress-style-classic .progress-value:before,
+.progress-style-tooltip .progress-value,
+.progress-style-tooltip .progress-value:before,
+.progress-style-tooltip .progressbar-back-text {
+    height: 20px;    
+}
+.progress-style-tooltip {
+    margin-bottom: 20px;
+}
+.progress-style-tooltip .progressbar-back-text{
+    bottom: -20px;
+}
+
+/* Style 2a */
+.progress-style-classic .progress-value {
+    position: static;
+}
+.progress-style-classic .progressbar-back-text {
+    position: absolute;
+    display: block;
+    right: 0;
+    line-height: 2.2;
+    font-size: 14px;
+    text-align: right;
+}
+/* Style 2b */
+.progress-style-tooltip .progress-value {
+    position: absolute;
+    z-index: 2;
+}
+.progress-style-tooltip .progressbar-back-text {
+    position: absolute;
+    display: block;
+    width: 100%;
+    font-size: 0;
+    z-index: 1;
+}
+.progress-style-tooltip .progressbar-front-text {
+    position: absolute;
+    display: block;
+    right: -25px;
+    bottom: 28px;
+    line-height: 1;
+    height: 23px;
+    text-align: center;
+    max-width: 50px;
+    padding: 5px;
+    border-radius: 3px;
+    color: #ffffff;
+    background-color: #555555;
+}
+.progress-style-tooltip .progressbar-front-text:before {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 20px;
+    border-left-width: 4px;
+    border-right-width: 4px;
+    border-top-width: 7px;
+    border-style: solid;
+    border-color: transparent;
+    border-top-color: #555555;
+    display: block;
+    width: 0;
+    height: 0;
+}
+
+/* style 3 */
+.progress-vertical {
+    height: 120px;
+    margin-right: 50px;
+    margin-bottom: 40px;
+    background-color: #eeeeee;
+}
+.progress-vertical .progress-name {
+    display: block;
+    position: absolute;
+    bottom: -40px;
+    text-align: center;
+    width: 100%;
+}
+.progress-vertical .progress-value {
+    height: 0;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.progress-vertical .progressbar-back-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+    z-index: 10;
+    display: block;
+}

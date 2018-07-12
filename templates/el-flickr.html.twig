@@ -1,0 +1,13 @@
+{% set classes = ['ac-flickr'] %}
+
+{% if main["column"] %}
+    {% set type_column = 'type-column-' ~ main["column"] %}
+{% else %}
+    {% set type_column = 'type-column-4' %}
+{% endif %}
+{% set classes = classes|merge([type_column]) %}    
+
+<!-- DC Flickr Feed Start -->
+<div id="jflickr_feed_container" {{ attributes.addClass(classes) }}>
+    <ul id="jflickr" class="jflickr js-jflickr" data-flickr ='{{ settings_plugin|raw }}' style="margin: -{% if main['img_margin'] %} {{ main['img_margin'] }} {% else %} {{ '3px' }} {% endif %}?>"></ul>
+</div>

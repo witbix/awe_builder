@@ -1,0 +1,17 @@
+/* Counter */
+.ac-counter {
+    text-align: center;
+}
+.counter-value{
+    font-size: 40px;
+    line-height: 40px;
+    margin: 10px 0;
+}
+.counter-title,
+.counter-description{
+    min-height: 0;
+    margin-bottom: 10px;
+}
+.ac-counter i{
+	font-size: 30px;
+}

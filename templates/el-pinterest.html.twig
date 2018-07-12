@@ -1,0 +1,25 @@
+{% set classes = ['ac-pinterest', main['pinterest_align']] %}
+{% set type = '' %}
+{% if '/pin/' in main['pinterest_width'] %}
+    {% set type = 'pin' %}
+{% elseif '/pinterest/' in main['pinterest_width'] %}
+    {% set type = 'board' %}
+{% endif %}
+
+<div {{ attributes.addClass(classes) }}>
+	{% if type=='pin' %}
+	  	<a data-pin-do="embedPin" data-pin-width="{{ main['pinterest_width'] }}" href="{{ main['pinterest_link'] }}"></a>
+	{% elseif type=='board' %}
+	  	{% if main['pinterest_follow']=='embed' %}
+	  		<a data-pin-do="embedBoard" data-pin-board-width="{{ main['pinterest_boad_width'] }}" data-pin-scale-height="{{ main['pinterest_scale_height'] }}" data-pin-scale-width="{{ main['pinterest_scale_width'] }}" href="{{ main['pinterest_link'] }}"></a>
+	  	{% else %}
+			<a data-pin-do="buttonFollow" href="{{ main['pinterest_link']  }}"></a>
+		{% endif %}
+	{% else %}
+		{% if main['pinterest_follow']=='embed' %}
+	  		<a data-pin-do="embedUser" data-pin-board-width="{{ main['pinterest_boad_width'] }}" data-pin-scale-height="{{ main['pinterest_scale_height'] }}" data-pin-scale-width="{{ main['pinterest_scale_width'] }}" href="{{ main['pinterest_link'] }}"></a>
+	  	{% else %}
+			<a data-pin-do="buttonFollow" href="{{ main['pinterest_link'] }}"></a>
+		{% endif %}
+	{% endif %}
+</div>

@@ -1,0 +1,18 @@
+{% set classes = ['ac-btn', 'btn'] %}
+
+{% if button["button_style"] %}
+{% set classes = classes|merge([button["button_style"]]) %}    
+{% endif %}
+
+{% if button["button_size"] %}
+{% set classes = classes|merge([button["button_size"]]) %}    
+{% endif %}
+
+{% if icon["icon_enable"] %}
+{% set classes = classes|merge([icon['icon_option']['icon_align']]) %}    
+{% endif %}
+
+<a  {{ attributes.addClass(classes) }} href="{{ button['button_link'] }}" target="{{ button['button_target'] }}" {% if button["button_disable"] %} {{ 'disabled="' ~ button['button_disable'] ~ '"'}} {% endif %} {% if button["button_rel"] %} {{ 'rel="' ~ button['button_rel'] ~ '"' }} {% endif %} role="button">
+    <i class="ac-icon {{ icon['icon_option']['icon_class'] }}"  {% if not icon["icon_enable"] %} {{' style="display:none"'}} {% endif %}></i>
+	<span>{{ button['button_text'] }}</span>
+</a>

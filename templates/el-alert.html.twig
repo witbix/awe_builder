@@ -1,0 +1,18 @@
+{% set classes = ['alert', 'js-alert'] %}
+
+{% if alert["type"] %}
+    {% set classes = classes|merge([alert["type"]]) %}    
+{% endif %}
+
+{% if alert["style"] %}
+{% set classes = classes|merge([alert["style"]]) %}    
+{% endif %}
+
+<div {{ attributes.addClass(classes) }}>
+    {% if alert["enableicon"] %}
+        <i class="{% if alert["icon"] %} {{alert["icon"]}} {% else %} 'fa fa-thumbs-up' {% endif %}"></i>
+    {% endif %}
+    <div class="alert__content" style="min-height: auto">
+        {{ main["content"]|raw }}
+    </div>
+</div>

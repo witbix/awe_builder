@@ -1,0 +1,20 @@
+{% set classes = ['ac_el-justified-wrapper', 'js-front-justified-wrapper'] %}
+
+<div {{ attributes.addClass(classes) }} data-enable-lightbox ="{{ main['enable_lightbox'] }}" data-row-height="{{ main['row_height'] }}" data-gallery-gap="{{ main['gap'] }}">
+  <div class="ac_el-justified js-ac_el-justified">
+        {% for key, file in main['images'] %}
+        <div class="grid-item">
+            {% if main['enable_lightbox'] %}
+            <a href="{{ file['url'] }}" class="mgf-md-popup js-lightbox">
+            {% endif %}
+            <img src="{{ file['url'] }}" alt="">
+            {% if main['enable_lightbox'] %}
+            </a>
+            {% endif %}
+            {% if caption['enable'] and main['captions'][key] is defined %}
+                <div class="js-caption caption" {% if caption['on_lightbox'] %} {{ 'data-on-lightbox=true' }} {% endif %}>{{ main['captions'][key]|raw }}</div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</div>

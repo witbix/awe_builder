@@ -1,0 +1,28 @@
+{% set classes = ['ac_masonry-wrapper', 'ac_masonry-grid', 'js-masonry-grid'] %}
+
+<div {{ attributes.addClass(classes) }} data-col-lg="{{ main['column'] }}"
+{% if main['column_responsive'] %}
+  {{ 'data-col-md="' ~ main['column_md'] ~ '" data-col-sm="' ~ main['column_sm'] ~ '" data-col-xs="' ~ main['column_xs'] ~ '"' }}
+{% endif %}     
+>
+    <div class="ac_masonry js-ac_masonry js-front-masonry-images" data-enable-lightbox ="{{ main['enable_lightbox'] }}" data-margin-image = "{{ main['margin_image'] }}">
+        <div class="grid-sizer"></div>
+        {% for key, file in main['images'] %}
+        <div class="grid-item {{ main['class_style'][key] }}">
+            <div class="grid-item__inner">
+                <div class="grid-item__content-wrapper">
+                    {% if main['enable_lightbox'] %}
+                    <a href="{{ file['url'] }}" class="mgf-md-popup js-lightbox">
+                    {% endif %}
+                    <div class="image-cover" style="background-image: url('{{ file['url'] }}');">
+                    <img src="{{ file['url'] }}" alt="">
+                    </div>
+                    {% if main['enable_lightbox'] %}
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>

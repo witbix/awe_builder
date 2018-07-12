@@ -1,0 +1,13 @@
+.ac_control ul{
+    margin: 0px !important; padding: 0px !important;
+}
+.ac_page-wrapper{margin: 100px auto 0px auto; width: 70%;}
+.ac_container{max-width: 100%;}
+html body.awecontent-layout{
+    height: auto;
+    /* fix for default toolbar*/
+    padding-top: 0px !important;
+    /* fix for admin menu toolbar*/
+    margin-top: 0px !important;
+}
+#toolbar, #admin-menu{display: none;}

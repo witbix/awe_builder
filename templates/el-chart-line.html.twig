@@ -1,0 +1,10 @@
+{% set classes = ['element-line-chart'] %}
+
+<div {{ attributes.addClass(classes) }} data-md-type="{{ main['chart_type'] }}" data-md-values='{{ main['list_data'] }}' data-md-labels='{{ main['list_label'] }}' data-md-animation="{{ main['chart_animation'] }}" data-md-tooltips="{{ main['enable_tooltip'] }}" data-md-responsive="{{ main['enable_responsive'] }}">
+	<div class="chart-canvas"><canvas height="1" width="1"></canvas></div>
+	<ul class="chart-detail">
+		{% for value in main['chart_element_value'] %}
+			<li><span style="background-color: {{ value["fillColor"] }}"></span> {{ value["label"] }}</li>
+		{% endfor %}
+	</ul>
+</div>

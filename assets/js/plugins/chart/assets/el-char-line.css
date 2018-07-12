@@ -1,0 +1,25 @@
+ul.chart-detail{
+	list-style: none;
+	margin-bottom: 0;
+	padding-left: 0;
+
+    text-align: center;
+}
+ul.chart-detail li{
+	margin-bottom: 5px;
+
+    display: inline;
+    margin-right: 12px;
+}
+ul.chart-detail li:last-child{
+    margin-right: 0;
+}
+ul.chart-detail span {
+    border-radius: 0.3em;
+    display: inline-block;
+    height: 1.3em;
+    left: 0;
+    margin-right: 0.5em;
+    vertical-align: middle;
+    width: 1.3em;
+}

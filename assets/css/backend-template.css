@@ -1,0 +1,76 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+.ac_templates {
+  background-color: #f4f4f4;
+  overflow: hidden;
+  padding: 80px 0;
+  line-height: 1.5em; }
+  .ac_templates img {
+    border: 0;
+    max-width: 100%;
+    vertical-align: middle; }
+
+.ac_templates__container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px; }
+
+.ac_templates__title {
+  font-size: 32px;
+  color: #272A2C;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 32px;
+  line-height: 1.5em; }
+
+.ac_templates__filters {
+  margin: 0 0 60px;
+  padding: 0;
+  list-style: none;
+  text-align: center; }
+  .ac_templates__filters li {
+    display: inline-block; }
+  .ac_templates__filters a {
+    font-size: 18px;
+    color: #707981;
+    text-decoration: none;
+    padding: 10px 22px; }
+    .ac_templates__filters a.current {
+      color: #292A2D; }
+
+.ac_templates__grid-row {
+  margin: -13px; }
+
+.ac_templates__grid {
+  overflow: hidden; }
+  .ac_templates__grid .item {
+    width: 25%;
+    padding: 13px;
+    float: left; }
+    .ac_templates__grid .item .img {
+      position: relative;
+      padding-top: 96%;
+      background-color: #f4f4f4;
+      overflow: hidden; }
+      .ac_templates__grid .item .img img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transition: all 1.4s linear .1s; }
+    .ac_templates__grid .item a {
+      display: block;
+      padding: 10px;
+      background-color: #fff;
+      text-decoration: none;
+      transition: all .4s ease; }
+      .ac_templates__grid .item a:hover {
+        transform: translate(0, -2px);
+        box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.05); }
+        .ac_templates__grid .item a:hover img {
+          top: 100%;
+          transform: translate(0, -100%); }
+    .ac_templates__grid .item .caption {
+      font-weight: 700;
+      font-size: 16px;
+      color: #333;
+      padding: 22px 0 12px; }

@@ -1,0 +1,99 @@
+awe_builder.iframe:
+  # Add css file
+  css:
+    component:
+      assets/libraries/aweicon/aweicon.css: {}
+      assets/libraries/medium-editor/css/medium-editor.css: {}
+      assets/libraries/medium-editor/css/themes/awebuilder.css: {}
+      assets/css/backend-layout.css: {}
+      assets/css/animate.css: {}
+      assets/css/frontend.css: {}
+  # Add js files
+  header: true
+  js:
+    assets/libraries/perfect-scrollbar/perfect-scrollbar.jquery.min.js: {}
+    assets/libraries/medium-editor/js/medium-editor.min.js: {}
+    assets/libraries/medium-editor/jquery.medium-editor.js: {}
+    assets/libraries/jquery.awe-tabs.js: {}
+    assets/js/frontend-animation-overlay.js: {}   
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupal.ajax
+    - core/jquery.ui.tabs
+    - core/jquery.ui.sortable
+    - core/jquery.ui.draggable
+    - core/jquery.ui.droppable
+    - core/jquery.ui.resizable
+
+awe_builder.frontend:
+  # Add css file
+  css:
+    component:
+      assets/libraries/aweicon/aweicon.css: {}
+      assets/css/animate.css: {}
+      assets/css/frontend.css: {}
+  # Add js files
+  header: true
+  js:
+    assets/libraries/jquery.awe-tabs.js: {}
+    assets/libraries/wow-js/wow.min.js: {}
+    assets/js/frontend-animation-overlay.js: {}    
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupal.ajax
+
+awe_builder.admin:
+  # Add css file.
+  css:
+    component:
+      assets/libraries/aweicon/aweicon.css: {}
+      assets/libraries/spectrum/spectrum.css: {}
+      assets/css/backend.css: {}
+      assets/css/drupal-backend.css: {}
+      assets/css/animate.css: {}
+  # Add js files.
+  header: true
+  js:
+    assets/libraries/perfect-scrollbar/perfect-scrollbar.jquery.min.js: {}
+    assets/libraries/spectrum/spectrum.js: {}
+    assets/libraries/jquery.awe-tabs.js: {}
+    assets/libraries/html2canvas/html2canvas.min.js: {}
+    assets/js/awebuilder.js: {}
+    assets/js/awe-block.js: {}
+    assets/js/awe-place-block.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/drupal.ajax
+    - core/drupal.dialog
+    - core/jquery.ui.tabs
+    - core/jquery.ui.sortable
+    - core/jquery.ui.draggable
+    - core/jquery.ui.droppable
+    - core/jquery.ui.resizable
+    - core/backbone
+awe_builder.template:
+  #add css file
+  css:
+    component:
+      assets/css/backend-layout.css: {}
+      assets/css/awebuilder_admin_template.css: {}
+  # add js files
+  header: true
+  js:
+    assets/js/jquery.ac-manage-templates.js: {}
+    assets/js/awebuilder_admin_template.js: {}
+  dependencies:
+    - awe_builder/awe_builder.admin
+awe_builder.toolbar:
+  css:
+    theme:
+      assets/css/awebuilder-toolbar.css: {}
+toolbar.fix:
+  js:
+    assets/js/fix-toolbar.js: {}
+  dependencies:
+    - toolbar/toolbar.escapeAdmin

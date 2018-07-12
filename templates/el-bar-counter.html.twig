@@ -1,0 +1,19 @@
+{% set classes = 'ac-progress-line ' %}
+{% if main['style'] is not defined or main['style'] == 1 %}
+    <div class="{{ classes }} progress-fill-text">
+    <div class="progress-value" data-transitiongoal="{{ main['percent'] }}" role="progressbar">
+      <h5 class="progress-name">{{ main['text_content'] }}</h5>
+    </div>
+  </div>
+{% elseif main['style'] == 2 %}
+  <div class="{{ classes }} {{ main['progress_interfaces'] }}">
+    <h5 class="progress-name">{{ main['text_content'] }}</h5>
+    <div class="progress-value" data-transitiongoal="{{ main['percent'] }}" role="progressbar"></div>
+  </div>
+{% else %}
+  <div class="{{ classes }} progress-vertical vertical">
+    <div class="progress-value" data-transitiongoal="{{ main['percent'] }}" role="progressbar"></div>
+    <h5 class="progress-name">{{ main['text_content'] }}</h5>
+  </div>
+{% endif %}
+

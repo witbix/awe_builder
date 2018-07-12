@@ -1,0 +1,26 @@
+awe_builder.admin:
+  title: 'AweContent'
+  description: 'Config AweContent, pages/sections templates'
+  parent: system.admin
+  route_name: awe_builder.admin
+  weight: 1
+awe_builder.config:
+  title: 'Configuration'
+  description: 'Configuration AweContent'
+  parent: awe_builder.admin
+  route_name: awe_builder.admin.config
+  weight: 11
+awe_builder.host:
+  title: 'Update Link'
+  description: 'You need to run update link if you change site URL'
+  parent: awe_builder.admin
+  route_name: awe_builder.admin.host
+  weight: 10
+awe_builder.template:
+  title: 'AweContent Templates'
+  description: 'Manage sections & pages templates'
+  parent: awe_builder.admin
+  route_name: awe_builder.admin.template
+  weight: 5
+  route_parameters:
+    type: 'page'

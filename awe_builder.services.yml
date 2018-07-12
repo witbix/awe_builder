@@ -1,0 +1,14 @@
+services:
+  plugin.manager.awe_element:
+    class: Drupal\awe_builder\AweElementManager
+    arguments: ['@container.namespaces', '@cache.default', '@module_handler']
+  awe_builder.access_checker:
+    class: Drupal\awe_builder\Access\AweBuilderAccessCheck
+    tags:
+      - { name: access_check, applies_to: _awe_builder_access_check }
+  aw_builder.export:
+    class: Drupal\awe_builder\AweBuilder\AweBuilderExport
+    arguments: ['@database.replica', '@file_system']
+  aw_builder.import:
+    class: Drupal\awe_builder\AweBuilder\AweBuilderImport
+    arguments: ['@database.replica', '@file_system']

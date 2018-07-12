@@ -1,0 +1,18 @@
+<div class="ac-accordion__panel">
+    <div class="{{ header_classes|join(' ') }}">
+        <a href="#ac_accordion-{{ id }}">
+            {% if icon and ((icon["position"] is not defined) or icon["position"] == "top" or icon["position"] == "left") %}
+                <i class="{% if (icon["classes"] is defined) and icon["classes"] %} {{ icon["classes"] }} {% endif %}{% if icon["position"] == "top"%}{{' ac-icon--block'}}{% endif %}"></i>
+            {% endif %}
+            {% if (title is defined) and title %}{{ title }}{% endif %}
+            {% if icon and (icon["position"] is  defined) and (icon["position"] == "right" or icon["position"] == "bottom") %}
+                <i class="{% if (icon["classes"] is defined) and icon["classes"] %} {{ icon["classes"] }} {% endif %}{% if icon["position"] == "bottom"%}{{' ac-icon--block'}}{% endif %}"></i>
+            {% endif %}
+        </a>
+    </div>
+    <div class="ac-accordion__body">
+        <div class="ac_row">
+            {{ content }}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,82 @@
+/* display Table */
+.cell-vertical {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+.cell-vertical .cell-middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/* Coverbox */
+.cover-box-wrapper {
+  overflow: hidden;
+  position: relative;
+  min-height: 100px;
+}
+.cover-box-wrapper .cover-box {
+  margin-bottom: 30px;
+  padding-left: 15px;
+  padding-right: 15px;
+  transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+    -webkit-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+}
+
+.cover-box {
+  display: block;
+  float: left;
+  position: relative;
+}
+.cover-box-image {
+  position: relative;
+}
+.cover-box-overlay {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.cover-box-image i{
+  font-size: 20px;
+  color: #FFFFFF;
+}
+.cover-box.normal-style .cover-box-content {
+  display: block;
+  padding-top: 30px;
+}
+.cover-box:not(.normal-style) .cover-box-content {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  /* height: 100%; */
+}
+.cover-box-content {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+.cover-box.active .cover-box-content,.cover-box.normal-style .cover-box-conten {display: block;}
+.cover-box-content .title {
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+.cover-box-content .subtitle {
+  margin-bottom: 22px;
+}
+.cover-box-content .description {
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+.cover-box-content .ac-btn {
+    color: #666;
+    border: 1px solid #666;
+}

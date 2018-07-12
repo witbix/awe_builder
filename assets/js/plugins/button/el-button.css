@@ -1,0 +1,28 @@
+
+/* Button */
+.btn {
+  text-decoration: none;
+}
+.btn span{
+	min-height: 0;
+}
+.btn i {
+    font-size: 16px;
+}
+.icon-left i{
+  margin-right: 6px;
+}
+.icon-right i{
+  margin-left: 8px;
+  float: right;
+}
+.icon-right span{
+  display: inline-block;
+}
+.btn-primary i,
+.btn-success i,
+.btn-info i,
+.btn-warning i,
+.btn-danger i {
+    color: #fff;
+}

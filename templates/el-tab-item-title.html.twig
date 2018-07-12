@@ -1,0 +1,13 @@
+<li>
+  <a href="#{{ el_tab["id"] }}">
+    {% if enable_nav_icon and (icon_position == "top" or icon_position == "left") %}
+      <i class="ac-tab__item-icon {{ el_tab["icon"] }}{% if icon_position == "top" %} {{ " ac-icon--block" }}{% endif %}"></i>
+    {% endif %}
+    {% if enable_nav_text %}
+      <span class="ac-tab__title">{{ el_tab["title"] }}</span>
+    {% endif %}
+    {% if enable_nav_icon and (icon_position == "bottom" or icon_position == "right") %}
+      <i class="ac-tab__item-icon {{ el_tab["icon"] }}{% if icon_position == "bottom" %} {{ " ac-icon--block" }}{% endif %}"></i>
+    {% endif %}
+  </a>
+</li>

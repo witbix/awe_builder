@@ -1,0 +1,12 @@
+{% set classes = ['ac-video'] %}
+
+<div {{ attributes.addClass(classes) }} data-playtype="{{ main["video_play"] }}" style="height: {% if main['video_responsive'] == "embed-responsive-custom" %}{{ main['video_height'] }}{% else %}{{'auto'}}{% endif %}">
+	<div class="thumb-video" {% if main["video_auto_play"] or (main["video_play"] =='inline' and not main["video_enable"]) %} {{ ' style="display:none"' }} {% endif %}>
+		<div class="image-content"><img src="{{ main['video_thumb'] }}" alt="video"/></div>
+		<div class="play-control"><div class="play-action"><i class="ic ac-icon-play"></i></div></div>
+	</div>
+	<a href="{{ main['ember_url'] }}" class="mfp-md-video"></a>
+	<div class="embed-responsive {{ main['video_responsive'] }}">
+		<iframe class="embed-responsive-item" src="{{ main['ember_url'] }}" frameborder="0"></iframe>
+	</div>
+</div>

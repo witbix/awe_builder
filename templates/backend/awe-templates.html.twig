@@ -1,0 +1,65 @@
+<div class="js-new-template">
+        <a class="js-new-template-btn awe-tpl-add add-template-btn" href="#" data-type="{{ type }}">
+            {% set header = 'Add new ' ~ type ~ ' template' %}
+            {{ header  }}
+        </a>
+    </div>
+{% if (type == 'page') %}
+{% set page_class = ' ac_templates__grid--page' %}
+{% endif %}
+<div class="js-ac-templates ac_templates">
+    
+    <div class="ac_templates__container">
+        <div class="ac_templates__filters">
+            <ul>
+                <li><a href="#" data-filter="*" class="current">{{ 'All'|trans }}</a></li>
+                <li><a href="#" data-filter=".active-theme" id="theme">{{ 'Theme'|trans }}</a></li>
+                <li><a href="#" data-filter=".custom" id="custom">{{ 'Custom'|trans }}</a></li>
+                <li><a href="#" data-filter=".own-template" id="owner">{{ 'My Templates'|trans }}</a></li>
+                {% if type == 'section' %}<li><a href="#" data-filter=".favorite" id="tempate-favorite">{{ 'Favorite'|trans }}</a></li>{% endif %}
+            </ul>
+        </div>
+        <div class="ac_templates__grid-row">
+            <div class="js-templates ac_templates__grid{{ page_class }}">
+                {% for template in templates %}
+                    <div class="js-template-item grid-item {{ template.classes }}"
+                         template-id="{{ template.tid }}">
+                        <div class="item">
+                            <div class="ac_control">
+                                <ul>
+                                    <li class="js-edit-btn ac_control__edit" title="Edit">
+                                        <i class="acicon acicon-pen"></i>
+                                    </li>
+                                    <li class="ac_control__clone" title="Clone">
+                                        <i class="acicon acicon-clone"></i>
+                                    </li>
+                                    <li class="ac_control__delete" title="Delete">
+                                        <i class="acicon acicon-del"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                            <a href="#">
+                                <div class="img">
+                                    <img src="{{ template.thumbnail }}" alt="{{ template.title }}">
+                                    <input type="hidden" value='{{ template.cover }}'>
+                                </div>
+                                <div class="caption">
+                                    {{ template.title }}
+                                </div>
+                                <textarea class="js-template-data" style="display: none">
+                                {{ template.data }}
+                            </textarea>
+                            </a>
+                        </div>
+                    </div><!-- / Item -->
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% if not load_more %}
+        {% set attributes = attributes.setAttribute('style', 'display: none') %}
+    {% endif %}
+    <div class="template-row text-center" {{ attributes }}>
+        <a class="load-more js-load-more-templates" href="#">{{ 'Load more'|trans }}</a>
+    </div>
+</div>

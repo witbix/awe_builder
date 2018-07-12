@@ -1,0 +1,19 @@
+<{{ tag }} {{ attributes }} {% if el_animation %}data-animation='{{ el_animation }}'{% endif %} {% if overlay %}data-overlay='{{ overlay }}'{% endif %}>
+    {% if customHTML %}
+        {%
+        set section_content = '
+            <div' ~ content_attributes ~ '>
+               <div class="js-ac-row ac_row js-sort-column">'
+                    ~ el_content|render ~
+                '</div>
+           </div>'
+        %}
+        {{ customHTML|replace({'[content]': section_content})|raw }}
+    {% else %}
+        <div {{ content_attributes }}>
+            <div class="js-ac-row ac_row js-sort-column">
+                {{ el_content }}
+            </div>
+        </div>
+    {% endif %}
+</{{ tag }}>

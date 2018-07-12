@@ -1,0 +1,50 @@
+/* Round Progress */
+.ac-progress-round {
+    text-align: center;
+    font-size: 14px;
+}
+.ac-progress-round .round-value {
+    max-width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.ac-progress-round .round-value .progressbar-text {
+    font-size: 30px;
+}
+.ac-progress-round .round-title {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.ac-progress-round .round-title,
+.ac-progress-round .round-description{
+    min-height: auto;
+}
+
+
+.ac-progress-round .round-icon {
+    position: relative;
+}
+.ac-progress-round .round-icon .ac-icon {
+    font-size: 52px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.ac-progress-round .round-icon .ac-icon:before {
+    display: block;
+}
+.ac-progress-round .round-icon .icon {
+    font-size: 52px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+.ac-progress-round .round-icon .icon:before {
+    display: block;
+}

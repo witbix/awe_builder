@@ -1,0 +1,7 @@
+{% set classes = [] %}
+
+<div {{ attributes.addClass(classes) }}>
+  <div class="awe-instagram {{ 'type-column-' ~ main['instagram_column'] }}" data-id='{% if main["instagram_id"] %} {{ main["instagram_id"] }} {% endif %}'>
+      <div data-instagram ='{{ settings_plugin|json_encode() }}' id="{{ settings_plugin['target'] }}" class="awe-instagram-list js-front-instagram" style="margin: -{% if main['margin_image'] %} {{ main['margin_image'] }} {% else %} {{ '3px' }} {% endif %}"></div>
+  </div>
+</div>

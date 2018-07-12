@@ -1,0 +1,18 @@
+.ac-btn-preview{
+    background-color: blue;
+    color: #fff;
+    padding: 5px 10px;
+}
+.ac-btn-preview:hover, .ac-btn-preview.running{
+    background-color: green;
+}
+.el-preview.ac_disable{
+    opacity: 1 !important;
+}
+.el-preview.ac_disable *{
+    pointer-events:all !important;
+    user-select:all !important;
+}
+.el-preview.ac_disable:after{
+    position: initial !important;
+}

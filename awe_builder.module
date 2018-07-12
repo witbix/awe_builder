@@ -1,0 +1,1101 @@
+<?php
+
+/**
+ * @file
+ * Contains awe_builder.module..
+ */
+
+use Drupal\awe_builder\AweBuilder\AweBuilderRender;
+use Drupal\block\Entity\Block;
+use Drupal\Component\Serialization\Json;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Template\Attribute;
+use Drupal\awe_builder\Form\AweBuilderUpdateHostForm;
+
+
+/**
+ * Implements hook_help().
+ * @param $route_name
+ * @param \Drupal\Core\Routing\RouteMatchInterface $route_match
+ * @return string
+ */
+function awe_builder_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the awe_builder module.
+    case 'help.page.awe_builder':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('AWE Builder is core module for AweContent and Megamenu modules. It provides visual drag & drop interface for enduser') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+function md_arg($index = null){
+  $path = \Drupal::service('path.current')->getPath();
+  $path = explode('/', $path);
+  if(count($path) && !$path[0])
+    unset ($path[0]);
+  // index from 0
+  $path = array_values($path);
+  if($index){
+    if(isset($path[$index]))
+      return $path[$index];
+    else 
+      return;
+  }
+  return $path;
+}
+
+/**
+ * Implements hook_library_info_alter().
+ */
+function awe_builder_library_info_build() {
+  $libraries = [];
+
+  if (\Drupal::hasService('awe_page.manager')) {
+
+    $awepages = \Drupal::service('awe_page.manager')->findAll();
+    $config = \Drupal::config('awe_builder.settings');
+    $global_fonts = $config->get('ac_google_font');
+    $include = $config->get('ac_unload_google_fonts');
+
+    foreach ($awepages as $index => $awepage) {
+
+      $settings = unserialize($awepage['settings']);
+      $font = $settings['font'];
+      $files = $settings['libraries'];
+      if ($font != '') {
+        $files['css']['theme'][$font] = ['type' => 'external'];
+      }
+      if (!$include) {
+        $files['css']['theme'][$global_fonts] = ['type' => 'external'];
+      }
+
+      $libraries["awe_page_{$awepage['pid']}"] = [
+        'dependencies' => [
+          'awe_builder/awe_builder.frontend'
+        ]
+      ];
+      if (isset($files['js'])) {
+        $libraries["awe_page_{$awepage['pid']}"]['js'] = $files['js'];
+      }
+      if (isset($files['css'])) {
+        $libraries["awe_page_{$awepage['pid']}"]['css'] = $files['css'];
+      }
+    }
+
+  }
+
+  $awe_fields = \Drupal::config('awe_field.libraries')->get();
+  if (is_array($awe_fields)) {
+    foreach ($awe_fields as $name => $data) {
+      $files = unserialize($data);
+      $libraries[$name] = [
+        'dependencies' => [
+          'awe_builder/awe_builder.frontend'
+        ]
+      ];
+      if (isset($files['js'])) {
+        $libraries[$name]['js'] = $files['js'];
+      }
+      if (isset($files['css'])) {
+        $libraries[$name]['css'] = $files['css'];
+      }
+
+    }
+  }
+
+  return $libraries;
+}
+
+/**
+ * Implements hook_theme().
+ * @param $existing
+ * @param $type
+ * @param $theme
+ * @param $path
+ * @return array
+ */
+function awe_builder_theme($existing, $type, $theme, $path) {
+  $theme = [];
+  //auto convert url when install profile or clear cache
+  _awe_builder_auto_convert_url();
+
+  $theme['awe_templates'] = [
+    'path' => $path . '/templates/backend',
+    'variables' => [
+      'data' => [],
+    ]
+  ];
+
+  $theme['awe_sections'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_content' => '',
+      'el_wrap_class' => '',
+    ]
+  ];
+
+  $theme['awe_section'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_content' => '',
+      'el_animation' => [],
+      'el_wrap_class' => '',
+      'custom_id' => '',
+      'custom_classes' => '',
+      'overlay'=>''
+    ]
+  ];
+
+  $theme['awe_column'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_content' => '',
+      'el_animation' => [],
+      'el_wrap_class' => '',
+      'custom_id' => '',
+      'custom_classes' => '',
+      'overlay'=>''
+    ]
+  ];
+
+  $theme['awe_block'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+
+  /* ############# elements ################## */
+  $theme['el_accordion'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_content' => '',
+      'el_wrap_class' => ''
+    ]
+  ];
+  $theme['el_accordion_item'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_content' => '',
+      'el_wrap_class' => '',
+      'el_title' => '',
+      'el_title_settings' => ''
+    ]
+  ];
+
+  $theme['el_alert'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_bar_counter'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_animation' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_button'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_call_action'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_carousel'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+      'el_content' => ''
+    ]
+  ];
+  $theme['el_carousel_item'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+      'el_content' => ''
+    ]
+  ];
+  $theme['el_chart_line'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_chart_pie'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_counter'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_coverbox'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_divider'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_dropcaps'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_facebook'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_flickr'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_google_plus'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_animation' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_header'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_html'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_icon'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_iframe'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_image'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_instagram'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_justified_grid'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_list'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_map'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_masonry_grid'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+      'el_content' => ''
+    ]
+  ];
+  $theme['el_masonry_item'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+      'el_content' => ''
+    ]
+  ];
+  
+  $theme['el_masonry_grid_images'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_nested'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+      'el_content' => ''
+    ]
+  ];
+  $theme['el_pinterest'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_round_counter'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_slideshow'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_table'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_tabs'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+      'el_content' => ''
+    ]
+  ];
+  $theme['el_tab_item_title'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'parent_settings' => [],
+      'el_settings' => [],
+      'el_wrap_class' => '',
+      'el_title' => ''
+    ]
+  ];
+  $theme['el_tab_item_body'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_wrap_class' => '',
+      'el_content' => ''
+    ]
+  ];
+  $theme['el_text'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+  $theme['el_video'] = [
+    'path' => $path . '/templates',
+    'variables' => [
+      'el_settings' => [],
+      'el_extra_data' => [],
+      'el_wrap_class' => '',
+    ]
+  ];
+
+  return $theme;
+}
+
+/**
+ * Implement hook_preprocess_html()
+ * @param $vars
+ */
+function awe_builder_preprocess_html(&$vars) {
+  $post = \Drupal::request()->query->all();
+  $frame = FALSE;
+
+  if (isset($post['eid']) && isset($post['type']) && isset($post['bundle'])) {
+    $frame = TRUE;
+  }
+
+  if (\Drupal::routeMatch()->getRouteName() == 'awe_page.admin.iframe') {
+    $frame = TRUE;
+  }
+
+  if (\Drupal::routeMatch()
+      ->getRouteName() == 'awe_builder.admin.template.iframe'
+  ) {
+    $frame = TRUE;
+  }
+
+  if ($frame) {
+    $vars['page_top'] = NULL;
+    if (isset($vars['html']['page_top'])) {
+      $vars['page_top'] = $vars['html']['page_top'];
+      unset($vars['html']['page_top']);
+    }
+    $vars['page_bottom'] = NULL;
+    if (isset($vars['html']['page_bottom'])) {
+      $vars['page_bottom'] = $vars['html']['page_bottom'];
+      unset($vars['html']['page_bottom']);
+    }
+    $vars['attributes']['class'][] = 'ac_creating';
+  }
+}
+
+function awe_builder_page_attachments(array &$attachments) {
+  $attachments['#attached']['library'][] = 'awe_builder/awe_builder.toolbar';
+  if (\Drupal::hasService('md_fontello')) {
+    $fontello = \Drupal::service('md_fontello');
+    $libraries = $fontello->getListLibraries();
+    foreach ($libraries as $library) {
+      $attachments['#attached']['library'][] = $library;
+    }
+  }
+}
+
+
+function awe_builder_preprocess_awe_templates(&$vars) {
+  $templates = [];
+  foreach ($vars['data']['templates'] as $index => $template) {
+    $templates[$index] = $template;
+  }
+  $vars['templates'] = $templates;
+  $vars['load_more'] = $vars['data']['load_more'];
+  $vars['type'] = $vars['data']['type'];
+
+}
+function awe_builder_preprocess_awe_sections(&$vars) {//print_r($vars['el_content'][0]); die;
+  //ksm($vars);dsm($vars);
+}
+
+/**
+ * Implement hook_preprocess_awe_section().
+ */
+function awe_builder_preprocess_awe_section(&$vars) {
+  $vars['tag'] = 'section';
+  $vars['content_attributes'] = new Attribute();
+  $vars['content_attributes']->addClass('ac_container');
+  $vars['attributes']['id'][] = $vars['custom_id'] ? $vars['custom_id'] : $vars['el_wrap_class'];
+  $settings = $vars['el_settings'];
+  $vars['attributes']['class'][] = 'ac_section';
+  $vars['attributes']['class'][] = $vars['el_wrap_class'];
+  $vars['attributes']['class'][] = $vars['custom_classes'];
+  if (isset($settings['main']['settings'])) {
+    $main_settings = $settings['main']['settings'];
+    $vars['tag'] = isset($main_settings['tag']) ? $main_settings['tag'] : 'section';
+    if (isset($main_settings['fluid']) && $main_settings['fluid']) {
+      $vars['content_attributes']->addClass('ac_container-fluid');
+    }
+
+    if (isset($main_settings['full']) && $main_settings['full']) {
+      $vars['content_attributes']->addClass('js-container-fullscreen');
+    }
+
+    $custom_html = isset($main_settings['customHTML']) ? $main_settings['customHTML'] : '';
+    if ($custom_html) {
+      $vars['customHTML'] = $custom_html;
+    }
+
+    if (isset($main_settings['classes']) && $main_settings['classes']) {
+      $vars['attributes']['class'][] = $main_settings['classes'];
+    }
+
+    if (isset($main_settings['attributes']) && $main_settings['attributes']) {
+      AweBuilderRender::getAttributes($vars['attributes'], $main_settings['attributes']);
+    }
+  }
+
+}
+
+/**
+ * Implement hook_preprocess_awe_column().
+ */
+function awe_builder_preprocess_awe_column(&$vars) {
+
+  //Add default class and process class responsive
+  $vars['attributes']['id'] = $vars['custom_id'] ? $vars['custom_id'] : $vars['el_wrap_class'];
+  $vars['attributes']['class'][] = 'ac-column';
+  $vars['attributes']['class'][] = $vars['el_wrap_class'];
+  $vars['attributes']['class'][] = $vars['custom_classes'];
+  if (!empty($vars['el_settings']) && isset($vars['el_settings']['main']['responsive'])) {
+    $responsive = $vars['el_settings']['main']['responsive']['classNumber'];
+    foreach ($responsive as $key => $value) {
+      $vars['attributes']['class'][] = ($key == 'xs') ? "ac_col-$value" : "ac_col-{$key}-$value";
+    }
+  }
+  $vars['tag'] = 'div';
+  if (isset($vars['el_settings']['main']['settings'])) {
+    $main_settings = $vars['el_settings']['main']['settings'];
+    $vars['tag'] = isset($main_settings['tag']) ? $main_settings['tag'] : 'div';
+    $custom_html = isset($main_settings['customHTML']) ? $main_settings['customHTML'] : '';
+
+    if ($custom_html) {
+      $vars['customHTML'] = $custom_html;
+    }
+
+    if (isset($main_settings['classes']) && $main_settings['classes']) {
+      $vars['attributes']['class'][] = $main_settings['classes'];
+    }
+
+    if (isset($main_settings['breakNewLine'])) {
+      foreach ($main_settings['breakNewLine'] as $screen => $value) {
+        if ($value) {
+          $vars['attributes']['class'][] = "ac_col-{$screen}-breakline";
+        }
+      }
+    }
+
+    if (isset($main_settings['offset'])) {
+      foreach ($main_settings['offset'] as $screen => $value) {
+        $vars['attributes']['class'][] = "ac_offset-{$screen}-{$value}";
+      }
+    }
+    if(isset($main_settings['push'])){
+      foreach($main_settings['push'] as $screen => $value){
+          $vars['attributes']['class'][] = "ac_push-{$screen}-{$value}";
+      }
+    }
+    if(isset($main_settings['pull'])){
+      foreach($main_settings['pull'] as $screen => $value){
+          $vars['attributes']['class'][] = "ac_pull-{$screen}-{$value}";
+      }
+    }
+
+    if (isset($main_settings['attributes']) && $main_settings['attributes']) {
+      AweBuilderRender::getAttributes($vars['attributes'], $main_settings['attributes']);
+    }
+  }
+
+
+}
+
+/**
+ * Implement hook_preprocess_awe_block()
+ */
+function awe_builder_preprocess_awe_block(&$vars) {
+
+  $vars['attributes']['class'][] = 'awe-block';
+  $vars['attributes']['class'][] = $vars['el_wrap_class'];
+
+  $block = Block::load($vars['el_extra_data']['delta']);
+  
+  if ($block) {
+    $vars['content'] = \Drupal::entityTypeManager()
+    ->getViewBuilder('block')
+    ->view($block);
+  }
+  else {
+    $vars['content'] = t('Block doesn\'t exit');
+  }
+}
+
+function _awebuilder_set_all_part_to_variable(&$vars) {
+  $data_settings = $vars['el_settings'];
+  $vars['id'] = $vars['el_wrap_class'];
+
+  foreach ($data_settings as $part => $settings) {
+    if (isset($settings['settings'])) {
+      $vars[$part] = $settings['settings'];
+    }
+    else {
+      $vars[$part] = array();
+    }
+  }
+}
+
+function awe_builder_preprocess_el_accordion(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  $vars['settings'] = Json::encode($vars['main']);
+  $vars['id'] = $vars['el_wrap_class'];
+  foreach ($vars['el_content'] as &$item) {
+    $item['#el_title_settings'] = $vars['title'];
+  }
+  $vars['panels'] = render($vars['el_content']);
+}
+
+function awe_builder_preprocess_el_accordion_item(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  $header_classes = array("ac-accordion__header");
+  $icon = FALSE;
+  $title_settings = isset($vars['el_title_settings']) ? $vars['el_title_settings'] : array();
+  $settings = $vars['main'];
+  if (isset($title_settings["type"]) && strstr($title_settings["type"], "icon") !== FALSE) {
+    $icon = array(
+      'classes' => isset($settings['icon']) ? $settings['icon'] : "",
+      "position" => isset($title_settings['iconPosition']) ? $title_settings['iconPosition'] : "top"
+    );
+    $header_classes[] = "ac_icon--{$icon["position"]}";
+  }
+  $vars['icon'] = $icon;
+  $vars['title'] = $vars['el_title'];
+  $vars['header_classes'] = $header_classes;
+  $vars['id'] = $vars['el_wrap_class'];
+  $vars['content'] = render($vars['el_content']);
+}
+
+function awe_builder_preprocess_el_alert(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_bar_counter(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_button(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_call_action(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+function awe_builder_preprocess_el_carousel(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  $vars['id'] = $vars['el_wrap_class'];
+  $items_lg = $vars['main']['lg']['view_items'] ? $vars['main']['lg']['view_items'] :  $vars['main']['xl']['view_items'];
+  $item_md = $vars['main']['md']['view_items'] ? $vars['main']['md']['view_items'] : $items_lg;
+  $responsive = array(
+    1200=>array('items' => $vars['main']['xl']['view_items']),
+    992=>array('items' => $items_lg),
+    768=>array('items'=> $item_md),      
+    576=>array('items'=> $vars['main']['sm']['view_items'] ? $vars['main']['sm']['view_items'] : $item_md),
+    0=>array('items'=>$vars['main']['xs']['view_items'] ? $vars['main']['xs']['view_items'] : 1),
+  );
+  $carousel_settings = array(      
+    'animateOut'=> ($vars['main']['effect'] == 'none') ? '' : $vars['main']['effect'],
+    //'items' => !$vars['main']['view_items'] ? 1 : $vars['main']['view_items'],
+    'responsive'=>$responsive,
+    'nav'=> $vars['main']['show_control'],
+    'navType'=> $vars['main']['nav'],
+    'dots'=> ($vars['main']['nav'] == 'none') ? false : true,
+    'autoplay'=> $vars['main']['auto_play'],
+    'autoplayHoverPause'=> $vars['main']['stop_hover'],
+    'autoplayTimeout'=> $vars['main']['speed'],
+    'autoplaySpeed'=> $vars['main']['transpeed'],
+    'mouseDrag'=> $vars['main']['mouse_drag'],
+    'touchDrag'=> $vars['main']['touch_drag'],
+    'loop'=>$vars['main']['loop']
+  );
+  $vars['settings'] = Json::encode($carousel_settings);
+  $vars['content'] = render($vars['el_content']);
+}
+
+function awe_builder_preprocess_el_carousel_item(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  $vars['content'] = render($vars['el_content']);
+}
+
+function awe_builder_preprocess_el_chart_line(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_chart_pie(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  $vars['main']['stroke_width'] = (int) $vars['main']['stroke_width'];
+}
+
+function awe_builder_preprocess_el_counter(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_coverbox(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_divider(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_dropcaps(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_facebook(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_flickr(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  $main = $vars['main'];
+  $stringStream = '';
+  if ($main['stream'] === 'user') {
+    $stringStream = $main['flickr_id'] ? $main['flickr_id'] : '';
+  }
+  if ($main['stream'] === 'group') {
+    $stringStream = $main['flickr_group_id'] ? $main['flickr_group_id'] : '11947580@N00';
+  }
+  $settings = array(
+    'qstrings' => array('id' => $stringStream),
+    'feedapi' => ($main['stream'] == 'user') ? 'photos_public.gne' : 'groups_pool.gne',
+    'limit' => $main['no_img'] ? $main['no_img'] : 12,
+    'itemTemplate' => '<li class="ac-item-flickr" style="padding: ' . ($main['img_margin'] ? $main['img_margin'] : '3px') . '">' . '<a target="_blank" href="{{' . (($main['preview'] == 'lightbox') ? "image_z" : "link") . '}}" title="{{title}}" class="mfp-zoom-in">' . '<img src="{{image_q}}" alt="{{title}}" />' . '</a>' . '</li>',
+    'enableLightbox' => ($main['preview'] == 'lightbox') ? TRUE : FALSE,
+    'enableResponsive'=>$main['column_responsive'],
+    'col_lg'=>$main['column'],
+    'col_md'=>$main['column_md'],
+    'col_sm'=>$main['column_sm'],
+    'col_xs'=>$main['column_xs']
+  );
+  $vars['settings_plugin'] = Json::encode($settings);
+}
+
+function awe_builder_preprocess_el_google_plus(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_header(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_html(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_icon(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  if (!isset($vars['icon']['style'])) {
+    $vars['icon']['style'] = '';
+  }
+}
+
+function awe_builder_preprocess_el_iframe(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_image(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_instagram(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  $main = $vars['main'];
+  $settings = array(
+    'clientId' => $main['instagram_client_id'],
+    'accessToken' => $main['instagram_acess_token'],
+    'get' => 'user',
+    'userId' => (float) $main['instagram_id'],
+    'limit' => $main['instagram_number'],
+    'template' => '<div class="awe-item-instagram" style="padding: ' . ($main['margin_image'] ? $main['margin_image'] : '3px') . '"><a target="_blank" href="{{' . (($main['preview'] == 'lightbox') ? "image" : "link") . '}}"><img src="{{image}}" class="img-responsive"/></a></div>',
+    'target' => 'awe-instafeed-'.$vars['el_wrap_class'],
+    'enableLightbox' => ($main['preview'] == 'lightbox') ? TRUE : FALSE,
+    'enableResponsive'=>$main['column_responsive'],
+    'col_lg'=>$main['column'],
+    'col_md'=>$main['column_md'],
+    'col_sm'=>$main['column_sm'],
+    'col_xs'=>$main['column_xs']
+  );
+  $vars['settings_plugin'] = $settings;
+}
+
+function awe_builder_preprocess_el_justified_grid(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+function awe_builder_preprocess_el_list(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_map(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  $vars['map_options'] = Json::encode($vars['main']);
+  $vars['cid'] = $vars['el_wrap_class'];
+}
+
+function awe_builder_preprocess_el_masonry_grid(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  
+  $vars['attributes']['data-col-lg'] = $vars['main']['column'];
+  if($vars['main']['column_responsive']){
+    $vars['attributes']['data-col-md'] = $vars['main']['column_md'];
+    $vars['attributes']['data-col-sm'] = $vars['main']['column_sm'];
+    $vars['attributes']['data-col-xs'] = $vars['main']['column_xs'];
+  }
+  foreach($vars['el_content'] as &$content){
+    unset($content['#theme_wrappers']);
+  }
+}
+function awe_builder_preprocess_el_masonry_item(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  $vars['attributes']['class'] = ['grid-item', 'js-grid-item', $vars['el_wrap_class']];
+  if(isset($vars['main']['class_style']))
+    $vars['attributes']['class'][] = $vars['main']['class_style'];
+}
+
+function awe_builder_preprocess_el_masonry_grid_images(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_nested(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_pinterest(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_round_counter(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  $vars['main']['stroke_width'] = (int) $vars['main']['stroke_width'];
+  $vars['main']['trail_width'] = (int) $vars['main']['trail_width'];
+}
+
+function awe_builder_preprocess_el_slideshow(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  $main = $vars['main'];
+  $settings = array(
+    'animateOut' => ($main['effect'] && $main['effect'] != 'none') ? $main['effect'] : 'fadeOut',
+    'items' => 1,
+    'nav' => $main['show_control'] ? TRUE : FALSE,
+    'dots' => ($main['nav'] == 'none') ? FALSE : TRUE,
+    'autoplay' => $main['auto_play'] ? TRUE : FALSE,
+    'autoplayHoverPause' => (isset($main['stop_hover']) && $main['stop_hover']) ? TRUE : FALSE,
+    'autoplayTimeout' => $main['speed'] ? $main['speed'] : 4000,
+    'autoplaySpeed' => $main['transpeed'] ? $main['transpeed'] : 400,
+    'navType' => $main['nav'],
+    'thumb_display' => $main['thumb_display']
+  );
+  $vars['settings_plugin'] = Json::encode($settings);
+
+  $over_position = '';
+  $position = '';
+  $caption = $vars['caption'];
+  if (isset($caption['enable']) && $caption['enable'] && isset($caption['position'])) {
+    $position = $caption['position'];
+    $position_arr = explode('-', $position);
+    if (count($position_arr) > 1) {
+      $over_position = '-' . $position_arr[1];
+    }
+  }
+  $vars['position'] = $position;
+  $vars['over_position'] = $over_position;
+}
+
+function awe_builder_preprocess_el_table(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_tabs(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  $navigator_position = isset($vars['main']["navigatorPosition"]) && $vars['main']["navigatorPosition"] ? $vars['main']["navigatorPosition"] : "top";
+  $vars["nav_classes_array"] = array(
+    "ac-tab__nav",
+    "ac-tab__nav--{$navigator_position}"
+  );
+  $vars['settings'] = Json::encode($vars['main']);
+
+  //repair struct tab  
+  $el_content = $vars['el_content'];
+  $vars['el_content'] = array();
+  foreach ($el_content as $item) {
+    $item_title = array(
+      '#parent_settings' => $vars['el_settings'],
+      '#el_title' => $item['#el_title'],
+      '#el_settings' => $item['#el_settings'],
+      '#el_wrap_class' => $item['#el_wrap_class'],
+      '#theme' => 'el_tab_item_title'
+    );
+    $vars['el_content']['tab_item_title'][] = $item_title;
+    $item_body = $item;
+    unset($item_body['#theme_wrappers']);
+    unset($item_body['#el_title']);
+    $item_body['#theme'] = 'el_tab_item_body';
+    $vars['el_content']['tab_item_body'][] = $item_body;
+  }
+}
+
+function awe_builder_preprocess_el_tab_item_title(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+  $title_settings = $vars['parent_settings']["title"]['settings'];
+  $enable_nav_icon = (isset($title_settings["type"]) && strstr($title_settings["type"], "icon") !== FALSE);
+  $enable_nav_text = (isset($title_settings["type"]) && strstr($title_settings["type"], "text") !== FALSE);
+  $icon_position = isset($title_settings["iconPosition"]) ? $title_settings["iconPosition"] : 'left';
+  $tab = array(
+    "id" => $vars['el_wrap_class'],
+    "title" => $vars["el_title"],
+    "icon" => isset($vars["main"]["icon"]) ? $vars["main"]["icon"] : "",
+  );
+  $vars['el_tab'] = $tab;
+  $vars['enable_nav_icon'] = $enable_nav_icon;
+  $vars['icon_position'] = $icon_position;
+  $vars['enable_nav_text'] = $enable_nav_text;
+}
+
+function awe_builder_preprocess_el_tab_item_body(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_text(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+function awe_builder_preprocess_el_video(&$vars) {
+  _awebuilder_set_all_part_to_variable($vars);
+}
+
+/*
+ * get templates from active themes
+ */
+
+function _awebuilder_get_theme_templates($type, $dataType = 'string'){
+  $activeTheme = \Drupal::config('system.theme')->get('default');
+  $data = _awebuilder_get_base_theme_templates($activeTheme, $type, $dataType);
+  return $data;
+}
+
+function _awebuilder_get_base_theme_templates($theme, $type, $dataType = 'string'){
+  $listThemeHandler = \Drupal::service('theme_handler')->listInfo();
+  $data = [];
+  if(isset($listThemeHandler[$theme]->base_theme) && $listThemeHandler[$theme]->base_theme){
+    $data = _awebuilder_get_base_theme_templates($listThemeHandler[$theme]->base_theme, $type, $dataType);
+  }
+  
+  $path = drupal_get_path('theme', $theme);
+  $templatesFolder = 'awebuilder-templates';
+  $settingsFile = "{$path}/{$templatesFolder}/settings.json";
+  if(is_file($settingsFile)){
+    $content = file_get_contents($settingsFile);
+    $content = json_decode($content, true);
+    foreach($content as $key => $item){
+      if($key !== 'list_images' && $item['type'] == $type){
+        unset($item['uid']); 
+        $item['data'] = ($dataType == 'array') ? unserialize($item['build_data']) : json_encode(unserialize($item['build_data']));
+        unset($item['build_data']);
+        $item['cover'] = json_encode(unserialize($item['cover']));
+        $item['tid'] = $theme.'-template-'.$item['tid'];
+        if(isset($content['list_images'][$key])){
+          $filename = basename($content['list_images'][$key]['url']);
+          $item['thumbnail'] = $filename ? "/{$path}/{$templatesFolder}/images/{$filename}" : '';
+        } else
+          $item['thumbnail'] =  '';
+        
+        $item['classes'] = 'active-theme';
+        
+        $data[] = (object) $item;
+      }
+    }
+  }
+  
+  return $data;
+}
+
+function _awe_builder_auto_convert_url(){
+  // auto update links by new domain
+  global $base_url;  
+  $config = \Drupal::service('config.factory');
+  $settings = $config->get('awe_builder.settings');
+  $oldHost = $settings->get('old_host');  
+  if($oldHost != $base_url){
+    $database = Drupal::database();
+    $form = new AweBuilderUpdateHostForm($database,$config);
+    $memory_limit = intval(ini_get('memory_limit'));
+    //change memory
+    if($memory_limit < 512)
+      ini_set('memory_limit', '512M');
+    // unlimit time
+    set_time_limit(0);
+    $form->updateLinksByNewBaseUrl($oldHost, $base_url);
+    //restore old memory
+    if($memory_limit < 512)
+      ini_set('memory_limit', $memory_limit.'M');
+    
+    // redirect to page convert domain
+    header("Location: $base_url", true, 302);
+    exit();
+  }
+}

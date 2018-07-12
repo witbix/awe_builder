@@ -1,0 +1,14 @@
+{%
+set classes = [
+'awe-sections',
+'ac_page-wrapper',
+el_wrap_class
+]
+
+%}
+<div {{ attributes.addClass(classes) }}>
+  {{ title_suffix }}
+  {% for section in el_content|without('#contextual_links') %}
+      {{ section }}
+  {% endfor %}
+</div>

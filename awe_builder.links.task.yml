@@ -1,0 +1,20 @@
+awebuilder.admin.section:
+  route_name: awe_builder.admin.template
+  base_route: awe_builder.admin.template
+  title: Sections
+  route_parameters:
+    type: 'section'
+awebuilder.admin.page:
+  route_name: awe_builder.admin.template
+  base_route: awe_builder.admin.template
+  title: Pages
+  route_parameters:
+    type: 'page'
+awebuilder.admin.export:
+  route_name: awe_builder.admin.export_template
+  base_route: awe_builder.admin.template
+  title: Export
+awebuilder.admin.import:
+  route_name: awe_builder.admin.import_template
+  base_route: awe_builder.admin.template
+  title: Import

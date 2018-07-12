@@ -1,0 +1,115 @@
+awe_builder.admin:
+  path: '/admin/awecontent'
+  defaults:
+    _title: 'AweContent'
+    _controller: '\Drupal\awe_builder\Controller\AweBuilderController::menuAweBuilder'
+  requirements:
+    _permission: 'administer awe builder'
+awe_builder.admin.config:
+  path: '/admin/awecontent/config'
+  defaults:
+    _title: 'AweContent Configuration'
+    _form: 'Drupal\awe_builder\Form\AweBuilderConfigForm'
+  requirements:
+    _permission: 'administer awecontent'
+awe_builder.admin.host:
+  path: '/admin/awecontent/update-link'
+  defaults:
+    _title: 'Update link'
+    _form: 'Drupal\awe_builder\Form\AweBuilderUpdateHostForm'
+  requirements:
+    _permission: 'administer awecontent'
+
+awe_builder.admin.template:
+  path: '/admin/awecontent/templates/{type}'
+  defaults:
+    _title: 'AweContent Templates'
+    _controller: 'Drupal\awe_builder\Controller\AweTemplatesController::getTemplates'
+  requirements:
+    _awe_builder_access_check: 'TRUE'
+awe_builder.admin.export_template:
+  path: '/admin/awecontent/templates/export'
+  defaults:
+    _title: 'AweContent Export Templates'
+    _form: 'Drupal\awe_builder\Form\AweExportTemplate'
+  requirements:
+    _permission: 'export template'
+awe_builder.admin.import_template:
+  path: '/admin/awecontent/templates/import'
+  defaults:
+    _title: 'AweContent Import Templates'
+    _form: 'Drupal\awe_builder\Form\AweImportTemplate'
+  requirements:
+    _permission: 'import template'
+awe_builder.admin.template.iframe:
+  path: 'awecontent/view'
+  defaults:
+    _title: 'AweContent Template'
+    _controller: 'Drupal\awe_builder\Controller\AweTemplatesController::viewPageTemplate'
+  requirements:
+    _permission: 'use awecontent'
+awe_builder.admin.template.items:
+  path: '/admin/awecontent/templates/items-template'
+  defaults:
+    _title: 'Item Template'
+    _controller: 'Drupal\awe_builder\Controller\AweTemplatesController::actionsTemplate'
+  requirements:
+    _permission: 'use awecontent'
+awe_builder.admin.place_block:
+  path: '/admin/awecontent/place-blocks'
+  defaults:
+    _title: 'Place block'
+    _controller: '\Drupal\awe_builder\Controller\AweBuilderController::placeBlocks'
+  requirements:
+    _permission: 'use awecontent'
+awe_builder.admin.list_block:
+  path: '/admin/awecontent/get-blocks'
+  defaults:
+    _title: 'List Block'
+    _controller: '\Drupal\awe_builder\Controller\AweBuilderController::listBlocks'
+  requirements:
+    _permission: 'use awecontent'
+awe_builder.admin.block_view:
+  path: 'awe-block/view/{block_id}'
+  defaults:
+    _title: 'Awe Block'
+    _controller: '\Drupal\awe_builder\Controller\AweBuilderController::viewBlock'
+  requirements:
+    _permission: 'use awecontent'
+awe_builder.admin.fonts:
+  path: 'admin/awecontent/get-fonts'
+  defaults:
+    _title: 'Fonts Settings'
+    _controller: '\Drupal\awe_builder\Controller\AweBuilderController::fontSettings'
+  requirements:
+    _permission: 'use awecontent'
+awe_builder.admin.json_response:
+  path: '/admin/awecontent/get-elements'
+  defaults:
+    _title: 'Get Background Slider'
+    _controller: '\Drupal\awe_builder\Controller\AweBuilderController::jsonResponse'
+  options:
+    _admin_route: FALSE
+  requirements:
+    _permission: 'use awecontent'
+awe_builder.admin.icons:
+  path: '/admin/awecontent/get-icons'
+  defaults:
+    _title: 'Get Background Slider'
+    _controller: '\Drupal\awe_builder\Controller\AweBuilderController::getIcons'
+  requirements:
+    _permission: 'use awecontent'
+awe_builder.admin.media_upload:
+  path: 'admin/awecontent/awe-media/upload'
+  defaults:
+    _title: 'Upload media'
+    _controller: '\Drupal\awe_builder\Controller\AweMediaController::uploadMedia'
+  requirements:
+    _permission: 'use awecontent'
+awe_builder.admin.media_library:
+  path: 'admin/awecontent/awe-media/library'
+  defaults:
+    _title: 'Upload media'
+    _controller: '\Drupal\awe_builder\Controller\AweMediaController::loadLibraryMedia'
+  requirements:
+    _permission: 'use awecontent'

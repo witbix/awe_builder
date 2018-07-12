@@ -1,0 +1,9 @@
+{% set classes = ['ac-icon'] %}
+
+{% if icon["style"] %}
+    {% set classes = classes|merge(['ac-icon-' ~ icon["style"]]) %}    
+{% endif %}
+
+<div {{ attributes.addClass(classes) }}>
+	<i class="{% if icon["icon"] %} {{icon["icon"] }} {% else %} {{ 'fa fa-user' }} {% endif %}"></i>
+</div>

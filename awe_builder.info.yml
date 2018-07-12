@@ -1,0 +1,11 @@
+name: AweBuilder
+type: module
+description: Core modules for AweContent (AwePage, AweField) & MD Megamenu
+package: AweContent
+configure: awe_builder.admin
+
+version: '8.x-1.3'
+core: 8.x
+project: 'awe_builder'
+project status url: 'http://megadrupal.com/fserver'
+datestamp: 1511240458

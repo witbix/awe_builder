@@ -1,0 +1,5 @@
+{% set classes = ['ac-header'] %}
+
+<{{ header['tag'] }} {{ attributes.addClass(classes) }}>
+    {{ header['content']|raw }}
+</{{ header['tag'] }}>

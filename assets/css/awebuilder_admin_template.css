@@ -1,0 +1,86 @@
+.awe-left{float: left;}
+.awe-clear-both:after{clear: both;}
+.awe-hidden{display: none;}
+#awe-preloader{font-size: 35px; color: red; text-align: center; margin-top: 350px;}
+.ac_templates * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.ac_templates .ac_templates__filters{
+    padding: 0px; margin: 0 0 60px;
+}
+.ac_templates__grid .caption {margin-bottom: 0}
+body.awecontent-active, body.admin-menu.awecontent-active{
+    /* fix for default toolbar*/
+    padding-top: 0px !important;
+    /* fix for admin menu toolbar*/
+    margin-top: 0px !important;
+}
+.awecontent-wrapper{ background-image: none;}
+.js-ac-buildzone iframe{width: 100vw;}
+
+.add-template-btn {
+	display: inline-block;
+	font-size: 14px;
+	color: #0075BF;
+	position: relative;
+	padding: 10px 10px 10px 15px;
+	margin: 20px 15px;
+	line-height: 20px;
+	text-decoration: none;
+}
+.add-template-btn:before, .add-template-btn:after {
+	content: '';
+	display: block;
+	width: 9px;
+	height: 3px;
+	background-color: #0075BF;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	-webkit-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	transform: translateY(-50%);
+}
+.add-template-btn:after {
+	-webkit-transform: translateY(-50%) rotate(90deg);
+	-ms-transform: translateY(-50%) rotate(90deg);
+	-o-transform: translateY(-50%) rotate(90deg);
+	transform: translateY(-50%) rotate(90deg);
+}
+.add-template-btn:hover {
+	text-decoration: none;
+	color: #FEB713;
+}
+.add-template-btn:active, .add-template-btn:focus {
+	text-decoration: none;
+	outline: none;
+}
+.add-template-btn:hover:before, .add-template-btn:hover:after {
+	background-color: #FEB713;
+}
+.text-center {
+	text-align: center;
+}
+.load-more {
+	display: inline-block;
+	text-decoration: none;
+	border: 1px solid #2492E7;
+	background-color: #FFF;
+	padding: 12px 30px;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	font-size: 18px;
+	border-radius: 4px;
+	font-weight: 700;
+	color: #C0C9CE;
+	-webkit-transition: ease .3s;
+	-o-transition: ease .3s;
+	transition: ease .3s;
+}
+.load-more:hover {
+	background-color: #2492E7;
+	color: #fff;
+}

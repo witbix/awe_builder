@@ -1,0 +1,9 @@
+{% set classes = ['ac-list'] %}
+
+{% if listwrap["style"] %}
+    {% set classes = classes|merge([listwrap["style"]]) %}    
+{% endif %}
+
+<{{ listwrap['tag'] }} {{ attributes.addClass(classes) }}>
+    {{ main['content']|raw }}
+</{{ listwrap['tag'] }}>

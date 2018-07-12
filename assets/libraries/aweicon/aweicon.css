@@ -1,0 +1,174 @@
+@font-face {
+    font-family: 'aweicon';
+    src:
+        url('./fonts/aweicon.ttf?o9xr21') format('truetype'),
+        url('./fonts/aweicon.woff?o9xr21') format('woff'),
+        url('./fonts/aweicon.svg?o9xr21#aweicon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+[class^="acicon-"], [class*=" acicon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'aweicon' !important;
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.acicon-hotpot:before {
+  content: "\e90c";
+}
+.acicon-responsive:before {
+  content: "\e000";
+}
+.acicon-tools:before {
+  content: "\e034";
+}
+.acicon-linegraph:before {
+  content: "\e039";
+}
+.acicon-bar-counter:before {
+  content: "\e911";
+}
+.acicon-img-extralarge:before {
+  content: "\e906";
+}
+.acicon-img-large:before {
+  content: "\e907";
+}
+.acicon-img-high:before {
+  content: "\e908";
+}
+.acicon-img-wide:before {
+  content: "\e909";
+}
+.acicon-img-normal:before {
+  content: "\e90a";
+}
+.acicon-css:before {
+  content: "\e90b";
+}
+.acicon-split:before {
+  content: "\e903";
+}
+.acicon-layout:before {
+  content: "\58";
+}
+.acicon-pen:before {
+  content: "\2d";
+}
+.acicon-link:before {
+  content: "\e005";
+}
+.acicon-del:before {
+  content: "\e604";
+}
+.acicon-star-2:before {
+  content: "\e613";
+}
+.acicon-upload:before {
+  content: "\e61c";
+}
+.acicon-wordpress:before {
+  content: "\e620";
+}
+.acicon-star:before {
+  content: "\e627";
+}
+.acicon-element:before {
+  content: "\e905";
+}
+.acicon-section:before {
+  content: "\e902";
+}
+.acicon-desktop:before {
+  content: "\45";
+}
+.acicon-show:before {
+  content: "\48";
+}
+.acicon-hide:before {
+  content: "\49";
+}
+.acicon-save:before {
+  content: "\4d";
+}
+.acicon-setting:before {
+  content: "\50";
+}
+.acicon-laptop:before {
+  content: "\35";
+}
+.acicon-help:before {
+  content: "\36";
+}
+.acicon-search:before {
+  content: "\23";
+}
+.acicon-comment:before {
+  content: "\2c";
+}
+.acicon-style:before {
+  content: "\2f";
+}
+.acicon-image:before {
+  content: "\5d";
+}
+.acicon-new:before {
+  content: "\e007";
+}
+.acicon-clone:before {
+  content: "\e008";
+}
+.acicon-phone:before {
+  content: "\e00d";
+}
+.acicon-tablet:before {
+  content: "\e014";
+}
+.acicon-template:before {
+  content: "\e025";
+}
+.acicon-animation:before {
+  content: "\e042";
+}
+.acicon-check:before {
+  content: "\e006";
+}
+.acicon-bar:before {
+  content: "\e033";
+}
+.acicon-angle-left:before {
+  content: "\e03f";
+}
+.acicon-minus:before {
+  content: "\e041";
+}
+.acicon-move:before {
+  content: "\e043";
+}
+.acicon-plus:before {
+  content: "\e048";
+}
+.acicon-close:before {
+  content: "\e04a";
+}
+.acicon-angle-right:before {
+  content: "\e04b";
+}
+.acicon-triangle-right:before {
+  content: "\e900";
+}
+.acicon-triangle-down:before {
+  content: "\e904";
+}
+.acicon-drupal:before {
+  content: "\e901";
+}

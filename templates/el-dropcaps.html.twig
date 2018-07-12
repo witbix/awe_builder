@@ -1,0 +1,6 @@
+{% set classes = ['dropcap-style'] %}
+
+<p {{ attributes.addClass(classes) }}>
+    <span class="first-letter {{ (main['style'] is defined and main['style']) ? main['style'] : 'dropcaps-normal' }}">{{ main['character'] }}</span>
+    <span class="description">{{ main['description']|raw }}</span>
+</p>

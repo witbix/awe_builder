@@ -1,0 +1,17 @@
+{% set classes = ['ac-progress-round'] %}
+
+{% if main['style'] is not defined or main['style'] == 1 %}
+  	<div {{ attributes.addClass(classes) }}>
+            <div class="round-value" data-value="{{ main['percent'] }}" data-strokewidth="{{ main['stroke_width'] }}" data-trailwidth="{{ main['trail_width'] }}" data-trailcolor="{{ main['trail_color'] }}" data-roundcolor="{{ main['stroke_color'] }}" data-fillcolor="{{ main['fill_color'] }}" data-easing="{{ main['easing'] }}"></div>
+            <div class="round-title" {% if not main["enable_title"] %} {{ 'style="display:none"' }} {% endif %}>{{ main['title'] }}</div>
+            <div class="round-description" {% if not main["enable_description"] %} {{ 'style="display:none"' }} {% endif %}>{{ main['description'] }}</div>
+  	</div>
+{% else %}
+  	<div {{ attributes.addClass(classes) }}>
+            <div class="round-value round-icon" data-value="{{ main['percent'] }}" data-strokewidth="{{ main['stroke_width'] }}" data-trailwidth="{{ main['trail_width'] }}" data-trailcolor="{{ main['trail_color'] }}" data-roundcolor="{{ main['stroke_color'] }}" data-fillcolor="{{ main['fill_color'] }}" data-easing="{{ main['easing'] }}">
+                    <i class="ac-icon {{ main["choose_icon"] }}"></i>
+            </div>
+            <div class="round-title" {% if not main["enable_title"] %} {{ 'style="display:none"' }} {% endif %}>{{ main['title'] }}</div>
+            <div class="round-description" {% if not main["enable_description"] %} {{ 'style="display:none"' }} {% endif %}>{{ main['description'] }}</div>
+  	</div>
+{% endif %}

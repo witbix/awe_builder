@@ -1,0 +1,15 @@
+.ac-googleplus iframe {
+    position: static !important;
+    max-width: 100% !important;
+}
+
+/* css as facebook */
+.ac-align-left{
+  text-align: left;
+}
+.ac-align-right{
+  text-align: right;
+}
+.ac-align-center{
+  text-align: center;
+}

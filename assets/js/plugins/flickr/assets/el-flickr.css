@@ -1,0 +1,47 @@
+/**
+ * File: flickr.css
+ * Website: http://megadrupal.com/
+ * Created: 2016
+ */
+
+/* =============== Flickr ============== */
+#jflickr_feed_container{
+	clear: both;
+    overflow: hidden;
+}
+.ac-flickr > .jflickr > .ac-item-flickr a img {
+    width: 100%;
+    height: auto;
+}
+#jflickr{
+    padding: 0;
+    margin: 0;
+}
+#jflickr li{
+    list-style: none;
+}
+.ac-flickr > .jflickr > .ac-item-flickr {
+    width: 33.33333333%;
+    float: left;
+    display: block;
+    position: relative;
+}
+.ac-flickr.type-column-1 > .jflickr > .ac-item-flickr {
+    width: 100%;
+}
+.ac-flickr.type-column-2 > .jflickr > .ac-item-flickr {
+    width: 50%;
+}
+.ac-flickr.type-column-4 > .jflickr > .ac-item-flickr {
+    width: 25%;
+}
+.ac-flickr.type-column-5 > .jflickr > .ac-item-flickr {
+    width: 20%;
+}
+.ac-flickr.type-column-6 > .jflickr > .ac-item-flickr {
+    width: 16.66666666%;
+}
+.js-ac-element{
+    clear: both;
+}
+

@@ -1,0 +1,15 @@
+<div class="ac-tab js-tabs" data-tabs = '{{ settings|raw }}'>
+  {% if main["navigatorPosition"] == "top" or main["navigatorPosition"] == "left" %}
+      <ul class="{{ nav_classes_array|join(' ') }}">
+      {{ el_content['tab_item_title']|render }}
+    </ul>
+  {% endif %}
+  <div class="ac-tab__content">
+      {{ el_content['tab_item_body']|render }}
+  </div>
+  {% if main["navigatorPosition"] == "right" or main["navigatorPosition"] == "bottom" %}
+    <ul class="{{ nav_classes_array|join(' ') }}">
+      {{ el_content['tab_item_title']|render }}
+    </ul>
+  {% endif %}
+</div>

@@ -1,0 +1,42 @@
+{% set classes = ['ac-slideshow', 'owl-carousel'] %}
+{% set count_imgs = main["images"]|length %}
+{% set count_captions = main["captions"]|length %}
+{% set last_img = count_imgs - 1 %}
+
+<div class="js-slideshow-wrap" data-slideshow='{{ settings_plugin|raw }}'>
+    {% if main['nav'] == 'thumbnail' and main['position'] == 'top' and count_imgs > 0 %}
+            <div class="dotsCont owl-carousel">
+                {% for i in range(0, last_img) %}
+                    <div class="item">
+                            <img src="{{ main['images'][i]['url'] }}" alt="">
+                    </div>
+                {% endfor %}
+            </div>
+    {% endif %}
+
+    {% if count_imgs > 0 %}
+            <div {{ attributes.addClass(classes) }}>
+                    {% for i in range(0, last_img) %}
+                        <div class="item ac-image js-ac-image  {% if over_position != '' or position == 'over' %} {{ 'ac-image--hover' ~ over_position }} {% endif %}">
+                                    {% if caption['enable'] and caption['position'] == 'top' %}                                       
+                                        <div class="ac-image__caption js-ac-image__caption caption_con" contenteditable= "true">{{ (count_captions > 0) ? main['captions'][i]|raw : 'Caption text here' }}</div>
+                                    {% endif %}
+                                    <img src="{{ main['images'][i]['url'] }}" alt="">
+                                    {% if caption['enable']  and caption['position'] != 'top' %}                                        
+                                        <div class="ac-image__caption js-ac-image__caption caption_con" contenteditable= "true">{{ (count_captions > 0) ? main['captions'][i]|raw : 'Caption text here' }}</div>                                            
+                                    {% endif %}
+                            </div>
+                    {% endfor %}
+            </div>
+    {% endif %}
+
+    {% if main['nav'] == 'thumbnail' and main['position'] == 'bottom' and count_imgs > 0 %}
+            <div class="dotsCont owl-carousel">
+                    {% for i in range(0, last_img) %}
+                        <div class="item">
+                                <img src="{{ main['images'][i]['url'] }}" alt="">
+                        </div>
+                    {% endfor %}
+            </div>
+    {% endif %}
+</div>

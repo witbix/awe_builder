@@ -1,0 +1,18 @@
+
+/* icon */
+.ac-icon-square,.ac-icon-circle{
+     border: 1px solid rgba(0,0,0,.1);
+}
+.ac-icon-square{
+  border-radius:0;
+  -moz-border-radius: 0;
+  -webkit-border-radius: 0;
+}
+.ac-icon-circle{
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+}
+.ac-icon-plain{
+  border: none;
+}

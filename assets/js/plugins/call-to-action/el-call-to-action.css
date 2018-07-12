@@ -1,0 +1,86 @@
+/* Display Table */
+@media (min-width:992px){
+    .display-cell{
+      display: table;
+      width: 100%;
+    }
+    .middle-cell{
+      display: table-cell;
+      vertical-align: middle;
+    }
+    .fit-cell{
+      width:1%;
+      white-space:nowrap;
+    }
+
+}
+
+.direction-left{
+  direction: ltr;
+}
+.direction-right{
+  direction: rtl;
+}
+.align-center{
+  text-align: center;
+}
+
+
+
+/* contenteditable */ 
+.action-title,
+.action-subtitle,
+.action-description,
+.btn span{
+  min-height: 0;
+}
+
+/* Content */
+.call-to-action{
+  border: 1px solid #666;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+/* font-size */
+.action-btn .btn{
+  color: #666;
+  margin: 10px;
+  border: 1px solid #666;
+}
+
+
+.action-icon i{
+  font-size: 60px;
+  padding: 20px;
+}
+.action-title{
+  font-size: 16px;
+}
+.action-subtitle{
+  font-size: 12px;
+  margin-top: 10px;
+}
+.action-description{
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+/* Button */
+.btn {
+  text-decoration: none;
+}
+.icon-left i{
+  margin-right: 8px;
+}
+.icon-right{
+  direction: rtl;
+}
+.icon-right i{
+  margin-left: 8px;
+}
+.ac-btn i, 
+.ac-btn span{
+  display: inline-block;
+  vertical-align: middle;
+}

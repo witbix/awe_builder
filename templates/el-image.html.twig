@@ -1,0 +1,30 @@
+{% set classes = ['ac-image', 'js-front-image'] %}
+{% set over_position = '' %}
+{% set position = '' %}
+{% if caption['position'] is defined %}
+  {% set position = caption['position'] %}
+  {% set position_arr = position|split('-') %}
+  {% if position_arr|length > 1 %}
+    {% set over_position = '-' ~ position_arr[1] %}
+  {% endif %}
+{% endif %}
+
+{% if over_position != '' or position == 'over' %}
+    {% set classes = classes|merge(['ac-image--hover' ~ over_position]) %}    
+{% endif %}
+
+<div {{ attributes.addClass(classes) }} data-enable-lightbox ="{{ image["enable_lightbox"] }}">
+    {% if caption['enable'] and position == 'top'  %}
+        <div class="ac-image__caption js-ac-image__caption" data-on-lightbox="{{ caption['on_lightbox'] }}">{{ caption['content']|raw }}</div>
+    {% endif %}
+    {% if image["enable_lightbox"] and image["file"]["url"] %}
+      <a class="mgf-md-popup" href="{{ image["file"]["url"] }}">
+    {% endif %}
+    <img class="ac-image-thumb" src="{{ image["file"]["url"] }}" alt=""/>
+    {% if image["enable_lightbox"] and image["file"]["url"] %}
+      </a>
+    {% endif %}
+    {% if caption['enable'] and position != 'top'  %}
+        <div class="ac-image__caption js-ac-image__caption" data-on-lightbox="{{ caption['on_lightbox'] }}">{{ caption['content']|raw }}</div>
+    {% endif %}
+</div>

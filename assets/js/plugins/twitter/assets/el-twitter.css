@@ -1,0 +1,104 @@
+ul.awe-twitter-list-item{
+    margin: 0;
+    padding: 0;
+    height: auto !important;
+}
+.awe-list-twitter.un-slide{
+    height: auto !important;
+}
+.awe-twitter-list-item{
+    width: 100%;
+}
+
+/* Markup */
+.el-markup table{
+    width: 100%;
+    font-size: 14px;
+    margin: 0 0 10px;
+    border: 1px solid #ffffff;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.el-markup .option-tiwtter {
+    width: 250px;
+    float: left;
+    padding: 10px;
+}
+.el-markup .option-tiwtter thead{
+    background: #ffffff;
+    color: #000;
+}
+.el-markup .option-tiwtter thead tr th{
+    text-align: left;
+    padding: 7px 0 7px 5px;
+}
+.el-markup .option-tiwtter thead tr th:first-child{
+    border-right: 1px solid #000;
+}
+.el-markup .option-tiwtter thead tr th:first-child{
+    width: 70px;
+    padding-left: 5px;
+}
+.el-markup .option-tiwtter tbody tr{
+    border-bottom: 1px solid #ffffff;
+}
+.el-markup .option-tiwtter tbody tr:last-child{
+    border-bottom: none;
+}
+.el-markup .option-tiwtter tbody tr td{
+    padding: 8px 0;
+}
+.el-markup .option-tiwtter tbody tr td:first-child{
+    border-right: 1px solid #ffffff;
+}
+.el-markup .option-tiwtter tbody tr td{
+    padding-left: 5px;
+}
+.el-textarea.el-template textarea{
+    height: 140px;
+}
+
+/* Content tweet*/
+.awe-twitter-list-item li{
+    border-bottom: 1px solid #f1f1f1;
+    margin-top: 0px !important;
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+    margin-bottom: 15px !important;
+}
+.awe-twitter-list-item li:last-child{
+    border-bottom: 1px solid #f1f1f1;
+    margin-bottom: 0px !important;
+}
+.awe-twitter-list-item .avatar{
+    float: left;
+    display: inline-block;
+    width: 48px;
+    margin-right: 15px;
+}
+.awe-twitter-list-item .avatar img{
+    border-radius: 50%;
+}
+.awe-twitter-list-item .tweet {
+    position: relative;
+    overflow: hidden;
+}
+
+.awe-twitter-list-item .tweet .screen_name {
+    display: inline-block;
+    line-height: 1;
+    padding-right: 15px;
+    border-right: 1px solid #dddddd;
+    margin-right: 15px;
+    font-weight: 600;
+    margin-top: 0px;
+}
+.awe-twitter-list-item .tweet .date {
+    color: #aaa;
+    font-size: 12px;
+}
+.awe-twitter-list-item .tweet .content-tweet {
+    margin-bottom: 15px;
+    margin-top: 0;
+    font-size: 14px;
+}

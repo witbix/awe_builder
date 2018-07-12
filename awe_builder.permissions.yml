@@ -1,0 +1,20 @@
+administer awecontent:
+  title: 'Administer AweContent'
+  description: 'Allow to manager, configure AweContent'
+  restrict access: TRUE
+use awecontent:
+  title: 'Use AweContent'
+  description: 'Allow to use AweContent'
+  restrict access: TRUE
+add section template:
+  title: 'Add section template'
+  restrict access: TRUE
+add page template:
+  title: 'Add page template'
+  restrict access: TRUE
+export template:
+  title: 'Export template'
+  restrict access: TRUE
+import template:
+  title: 'Import template'
+  restrict access: TRUE

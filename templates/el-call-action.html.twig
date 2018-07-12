@@ -1,0 +1,22 @@
+{% set classes = ['call-to-action', main['align']] %}
+
+{% if main['align'] != 'align-center' %}
+    {% set classes = classes|merge(['display-cell']) %}    
+{% endif %}
+
+<div {{ attributes.addClass(classes) }}>
+	<div class="{% if main['align'] != 'align-center' %} {{ 'middle-cell fit-cell' }} {% endif %} action-icon" {% if not icon["icon_enable"] %} {{ 'style="display:none"' }} {% endif %}>
+		<i class="ac-icon {{ icon['icon_class'] }}"></i>
+	</div>
+	<div class="{% if main['align'] != 'align-center' %} {{ 'middle-cell' }} {% endif %} action-information">
+		<div class="action-title">{{ main['title'] }}</div>
+		<div class="action-subtitle" {% if not main["enable_subtitle"] %} {{ 'style="display:none"' }} {% endif %}>{{ main['subtitle'] }}</div>
+		<div class="action-description" {% if not main["enable_description"] %} {{ 'style="display:none"' }} {% endif %}>{{ main['description'] }}</div>
+	</div>
+	<div class="{% if main['align'] != 'align-center' %} {{ 'middle-cell fit-cell' }} {% endif %} action-btn">
+		<a class="ac-btn btn {% if button["button_icon_enable"] %} {{ button['button_icon_option']['button_icon_align'] }} {% endif %}" href="{{ button['button_link'] }}" target="{{ button['button_target'] }}">
+			<i class="ac-icon {{ button['button_icon_option']['button_icon_class'] }}" {% if not button["button_icon_enable"] %} {{ ' style="display:none"' }} {% endif %}></i>
+			<span>{{ button['button_text'] }}</span>
+		</a>
+	</div>
+</div>

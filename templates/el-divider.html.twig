@@ -1,0 +1,29 @@
+{% set classes = ['ac-divider'] %}
+
+{% if main["style"] %}
+    {% set classes = classes|merge([main["style"]]) %}
+{% endif %}
+
+{% set classes = classes|merge([main["contentType"]]) %}
+
+{% if main["customWidth"] is defined and main["customWidth"] %}
+    {% set classes = classes|merge([main['customWidthWrap']['align']]) %}    
+{% endif %}
+
+{% if main['contentType'] !='ac-divider--notext' %}
+    {% set classes = classes|merge([main['contentPosition']]) %}    
+{% endif %}
+    
+<div {{ attributes.addClass(classes) }}  style="{% if main["customWidth"] is defined and main["customWidth"] %} {{ 'width:' ~ main["customWidthWrap"]["width"] ~ ';' }} {% endif %}{% if main["contentType"] == 'ac-divider--notext' %} {{ 'border-top-width:' ~ main["height"] ~ ';border-color:' ~ main["color"] }} {% endif %}">
+
+    {% if main["contentType"] != 'ac-divider--notext' %}
+	<div class="ac-divider__text" style = " {% if main["height"] > 1 %}  {{ 'line-height:' }} {% if main["height"] < 18 %} {{ '18px' }} {% else %} {{ main["height"] }} {% endif %} {% endif %}">
+        <div class="ac-divider__textval">
+        	<span {% if main["contentType"] != "ac-divider--text" %}  {{ ' style="display:none"' }} {% endif %}>{{ main['contentText'] }}</span>
+        	<i class="ac-icon {{ main['contentIcon'] }}"  {% if main["contentType"] != "ac-divider--icon" %}  {{ ' style="display:none"' }} {% endif %}></i>
+        </div>
+        <div class="ac-divider__line-left" style = "border-color: {{ main['color'] }};  {% if main["height"] %}  {{ 'border-width:' ~ main["height"] }} {% endif %}"></div>
+        <div class="ac-divider__line-right" style = "border-color: {{ main['color'] }};  {% if main["height"] %}  {{ 'border-width:' ~ main["height"] }} {% endif %}"></div>
+    </div>
+    {% endif %}
+</div>

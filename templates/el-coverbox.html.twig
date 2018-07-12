@@ -1,0 +1,28 @@
+{% set classes = ['cover-box-wrapper'] %}
+
+<div {{ attributes.addClass(classes) }} data-lg='{{ main["desktops_large"] }}' data-md='{{ main["desktops_medium"] }}'  data-sm='{{ main["tablets"] }}' data-xs='{{ main["phones"] }}'>
+
+	{% for value in main['element_value'] %}
+		<div class="cover-box">
+			<div class="cover-box-image">
+				<a href="{{ value["button_link"] }}" target="{{ value["button_target"] }}">
+					<img src="{{ value["thumb_upload"]["url"]}}" alt="banner image">
+					<div class="cover-box-overlay">
+						<div class="cell-vertical">
+							<div class="cell-middle">
+								<i class="ac-icon {{ value["choose_icon"] }}"></i>
+							</div>
+						</div>
+					</div>
+				</a>
+			</div>
+			<div class="cover-box-content">
+				<h4 class="title">{{ value["title"] }}</h4>
+				<div class="subtitle" {% if not main["enable_subtitle"] %} {{ 'style="display:none"' }} {% endif %}>{{ value["subtitle"] }}</div>
+				<div class="description" {% if not main["enable_description"] %} {{ 'style="display:none"' }} {% endif %}>{{ value["description"] }}</div>
+				<a class="ac-btn btn" href="{{ value["button_link"] }}" target="{{ value["button_target"] }}" {% if not main["enable_button"] %} {{ 'style="display:none"' }} {% endif %}>{{ value["button_text"] }}</a>
+			</div>
+		</div>
+	{% endfor %}
+
+</div>

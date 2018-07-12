@@ -1,0 +1,32 @@
+.owl-carousel.js-owl-carousel{display: block;}
+.ac-carousel-wrapper{
+    overflow: hidden; /*padding-top: 30px;*/
+}
+.ac-carousel-wrapper .owl-carousel .owl-stage-outer{
+    overflow: visible;
+}
+.ac-owl-carousel .js-owl-item{margin-top: 0px;}
+.ac-carousel-wrapper .ac-owl-carousel .js-owl-item{margin-top: 28px;}
+.ac-owl-carousel .owl-dots .owl-dot .dot-number{
+	line-height: 12px;
+	font-size: 12px;
+	padding: 7px 10px;
+	-webkit-border-radius: 50%;
+	-moz-border-radius: 50%;
+	border-radius: 50%;
+	height: auto;
+	width: auto;
+	color: #FFF;
+}
+.ac-tab__nav .ac-btn-preview{
+    background-color: blue;
+    color: #fff;
+    padding: 5px 10px;
+    margin-left: 3px;
+}
+.ac-tab__nav .ac-btn-preview:hover, .ac-tab__nav .ac-btn-preview.running{
+    background-color: green;
+}
+.ac-carousel-wrapper .ac_control{
+    
+}

@@ -1,0 +1,15 @@
+<{{ tag }} {{ attributes }} {% if el_animation %}data-animation='{{ el_animation }}'{% endif %} {% if overlay %}data-overlay='{{ overlay }}'{% endif %}>
+    {% if customHTML %}
+        {%
+        set column_content = '
+            <div class="ac_elements-wrapper">'
+                ~ el_content|render ~
+            '</div>'
+        %}
+        {{ customHTML|replace({'[content]': column_content})|raw }}
+    {% else %}
+        <div class="ac_elements-wrapper">
+            {{ el_content }}
+        </div>
+    {% endif %}
+</{{ tag }}>
