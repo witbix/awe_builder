@@ -1,0 +1,7 @@
+{
+    "name": "blogenic/awe_builder",
+    "description": "Required by md_megamenu",
+    "type": "drupal-module",
+    "minimum-stability": "dev",
+    "require": {}
+}
