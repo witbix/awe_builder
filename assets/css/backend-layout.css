@@ -177,7 +177,7 @@ body {
 
 .ac_control, .ac_inline-control {
   position: absolute;
-  top: -26px;
+  top: 0;
   left: -1px;
   display: inline-block;
   color: #fff;
