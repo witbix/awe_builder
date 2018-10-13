@@ -1,5 +1,5 @@
 {
-    "name": "blogenic/awe_builder",
+    "name": "witbix/awe_builder",
     "description": "Required by md_megamenu",
     "type": "drupal-module",
     "minimum-stability": "dev",
